@@ -1,0 +1,94 @@
+<div class="account-card" *ngIf="account">
+    <div class="container d-flex align-items-center">
+      <div class="people">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+      </div>
+      <span class="text-break text-wrap">{{account}}</span></div>
+</div>
+<div class="user-bg min-vh-90">
+  <div class="container overflow-hidden" *ngIf="account; else tip">
+    <h2>Voucher</h2>
+
+    <div class="row card-group" *ngIf="cards.length">
+      <div class="col-12 col-lg-4 mb-3" *ngFor="let card of cards">
+        <div class="voucher-card">
+          <div class="head">
+            <div class="title">Voucher quantity: <strong>{{ card.balance }}</strong></div>
+            <div class="title-sub"></div>
+          </div>
+          <div class="body">
+            <div class="percent">
+              <div class="info">
+                <strong class="text-{{card.length}}">{{ card.priceOff }}%</strong>
+                <span>Discount</span>
+              </div>
+              <div class="thumb">
+                <img src="../../../assets/images/voucher{{ card.length }}.png" alt="">
+              </div>
+            </div>
+            <div class="intro">
+              <h2>{{ card.length }}L Voucher </h2>
+              <p>Mint character length is {{ card.length }}, and the price is reduced by {{ 100 - card.priceOff }}%.</p>
+            </div>
+          </div>
+          <div class="foot">
+            <button class="btn btn-opensea" (click)="goVoucherOpensea(card)"><img src="../../../assets/images/opensea.png" alt=""> opensea</button>
+            <a class="btn btn-mint" routerLink="/mint">Click to mint</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 mb-3" *ngIf="isCardsLoading">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="empty-card" *ngIf="!cards.length">
+      <p>Follow twitter activity to get land voucher.</p>
+      <a class="btn" href="https://mobile.twitter.com/olandbox" target="_blank">Twitter</a>
+    </div>
+
+    <h2>Land</h2>
+    <div class="row card-group" *ngIf="lands.length">
+      <div class="col-12 col-lg-4 mb-3" *ngFor="let land of lands">
+        <div class="land-card">
+          <div class="body">
+            <img src="{{ land.image }}" alt="">
+            <strong>{{ land.name }}</strong>
+          </div>
+          <div class="foot">
+            <button class="btn btn-opensea" (click)="goLandOpensea(land.name)"><img src="../../../assets/images/opensea.png" alt=""> opensea</button>
+            <button class="btn btn-mint" (click)="goDetail(land.name)">View details</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 mb-3" *ngIf="isLandsLoading">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="empty-card" *ngIf="!lands.length">
+      <p>There's nothing here. Now go to mint land.</p>
+      <a class="btn" routerLink="/mint">Mint</a>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #tip>
+  <div class="account-card">
+    <div class="container d-flex align-items-center justify-content-center">
+      <div class="text-white">
+        Connect your wallet, please!
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,120 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.bg {
+    background: url('./assets/images/bg-new.jpg') no-repeat center;
+    background-size: cover;
+    min-height: 100vh;
+
+    overflow: hidden;
+}
+.min-vh-90 {
+    min-height: calc(100vh - 72px - 80px);
+}
+@media (max-width: 575.98px) {
+    .min-vh-90 {
+        min-height: calc(100vh - 58px);
+    }
+}
+
+.font-importent {
+    color: #10BAE5;
+    
+}
+.font-title {
+    color: #2050CB !important;
+}
+.font-point {
+    color: #365DC0 !important;
+}
+.font-second {
+    color: #5F6677 !important;
+}
+.bg-gray {
+    background-color: #121A26;
+}
+.hide {
+    display: none!important;
+    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+    transition-delay: 0s;
+}
+hr {
+    border-top: 1px solid #1B314D;
+    margin-top: 0;
+}
+.border-secondary {
+    border-color: #666D80 !important;
+}
+.svg-importent {
+    filter: invert(77%) sepia(67%) saturate(5546%) hue-rotate(153deg) brightness(104%) contrast(87%);
+}
+.fs-1 {
+    font-size: 2rem;
+}
+.fs-2 {
+    font-size: 1.75rem;
+}
+.fs-3 {
+    font-size: 1.5rem;
+}
+.fs-4 {
+    font-size: 1.25rem;
+}
+.fs-5 {
+    font-size: 1rem;
+}
+.fs-6 {
+    font-size: 0.75rem;
+}
+.bg-dark-first {
+    background-color: #080F17;
+}
+.bg-dark-second {
+    background-color: #0D1926;
+}
+.bg-dark-third {
+    background-color: #122133;
+}
+
+.modal-backdrop.show {opacity: 0.8;}
+.modal-mask {
+    background: #000;
+}
+.dark .modal-content {
+    background: #080F17;
+    border: 1px solid #666D80;
+    color: #666D80;
+    font-size: 20px;
+}
+.dark .modal-header {
+    align-self: center;
+    justify-content: center;
+    font-size: 48px;
+    color: #fff;
+    border-bottom: 0 none;
+}
+.dark .modal-footer {
+    border-top: 0 none;
+    justify-content: center;
+}
+
+@media screen and (max-width: 992px) {
+    html, body {
+        font-size: 14px;
+    }
+    
+}
+@media screen and (max-width: 768px) {
+    .title-text h1 {
+        margin: 2.5rem 0 0 0;
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .title-text h1 {
+        margin: 2rem 0 0 0;
+        font-size: 2rem;
+    }
+}

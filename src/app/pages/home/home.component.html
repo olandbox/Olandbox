@@ -1,0 +1,178 @@
+<div class="container min-vh-90">   
+
+    <div class="title-text">
+        <h1>ONE LAND ONE WORLD</h1>
+    </div>
+
+
+    <!-- search input -->
+    <form class="name-search position-relative">
+        <div class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg py-3" name="land" 
+                placeholder="Support English letters and numbers"
+                [disabled]="!(contractService.chainStatus$ | async) || isSearching"
+                [(ngModel)]="landName" 
+                (keyup.enter)="search(landName)" 
+                (keyup)="verifyTip = false"
+                >
+
+                <button type="submit" class="btn btn-primary px-4" name="land" (click)="search(landName)" [disabled]="!(contractService.chainStatus$ | async) || isSearching">
+                    <svg *ngIf="!isSearching" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    <span *ngIf="isSearching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span>Search</span>
+                </button>
+            </div>
+        </div>
+        <div class="position-absolute name-search-tip" *ngIf="verifyTip">Input between 6 and 50 characters and alphabets only</div>
+    </form>
+
+    <!-- minting loader -->
+    <div class="mask" *ngIf="isMinting">
+        <div class="d-flex flex-column align-items-center" >
+            <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                <span class="visually-hidden"></span>
+            </div>
+            <div class="text-primary mt-3">Minting</div>
+        </div>
+    </div>
+
+    <app-logout-board *ngIf="boardStatus === statuEnum.default" [defaultInfo]="defaultInfo"></app-logout-board>
+
+    <div *ngIf="boardStatus === statuEnum.default">
+        <app-mint-history></app-mint-history>
+        <div class="text-center mb-3"><button class="btn btn-view "  routerLink="/history">View All</button></div>
+    </div>
+
+    <div class="section" *ngIf="boardStatus === statuEnum.search">
+
+
+        <div class="row">
+            <div class="col-12">
+                <p class="text-white fw-bold mb-4" *ngIf="landInfo.owner">Sorry, the oland has already been mint. Please search for other content to mint.</p>
+                <p class="text-white fw-bold mb-4" *ngIf="!landInfo.owner">Congratulations! "{{ landInfo.name }}" hasn't been mint yet, you can mint it.</p>
+            </div>
+        </div>
+        <hr>
+
+        <!-- minted -->
+        <div class="clearfix" *ngIf="landInfo.owner">
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-45"  (click)="goDetail(landInfo.name)">
+                <div class="d-flex  justify-content-start align-items-center w-land">
+                    <img src="{{ landInfo.img }}" alt="{{ landInfo.name }}" class="rounded float-left border border-gray" style="width:5rem; height: 5rem;">
+                    <strong class="font-importent fs-1 ml-5 text-truncate w-auto">{{ landInfo.name }}</strong>
+                </div>
+                <div class="d-flex justify-content-end align-items-stretch w-land">
+                    <div class="land-length">{{landInfo.logicLength}} <br> length</div>
+                    <button class="btn btn-dark mr-0" (click)="goDetail(landInfo.name)">
+                        View land
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="text-truncate w-auto land-owner">Holder: {{ landInfo.owner }}</div>
+            <div class="float-right">
+                <button class="btn btn-dark" (click)="goOpensea()"><img src="../../../assets/images/opensea.png" alt="" style="height: 14px;"> opensea</button>
+            </div>
+        </div>
+
+        <!-- not mint -->
+        <div *ngIf="!landInfo.owner">
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-45">
+                <div class="font-importent fs-1 text-truncate w-auto" (click)="goDetail(landInfo.name)"><strong>{{ landInfo.name }}</strong></div>
+                <div class="d-flex justify-content-end align-items-stretch w-land">
+                    <div class="land-length">{{landInfo.logicLength}} <br> length</div>
+                    <button class="btn btn-dark mr-0" (click)="goDetail(landInfo.name)">
+                        View land
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+            </div>
+            
+            <app-cards [landInfo]="landInfo" [isSearching]="isSearching" (selectCardEvent)="selectCard($event)"></app-cards>
+
+            <!-- mint button -->
+            <div class="mint d-none d-md-flex justify-content-start align-items-center">
+                <div class="mint-price" *ngIf="!landInfo.selectedCard">
+                    <div class="font-importent">{{ landInfo.price }}<span>matic</span></div>
+                    <div class="font-second">Land Price</div>
+                </div>
+                <div class="mint-price" *ngIf="landInfo.selectedCard">
+                    <div class="font-importent">{{ landInfo.cardPrice }}<span>matic</span></div>
+                    <div class="font-second">Favorable Price</div>
+                </div>
+                <div class="mint-slip" [ngClass]="{'toggle': mintSlipToggle}" (click)="mintSlipToggle = !mintSlipToggle">+10% 
+                    <svg xmlns="http://www.wS.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                  </svg>
+                </div>
+                <div class="mint-tip">
+                    <span><img src="../../../assets/images/arrow-up.svg" class="svg-importent">Sell out 10, and the price rises by {{rise}}matic.</span>
+                    <button class="btn" [disabled]="landInfo.disabled" (click)="mint()">Click to mint</button>
+                </div>
+                
+            </div>
+            <div class="mint-slip-tip d-none d-md-flex" *ngIf="mintSlipToggle">
+                <div (click)="mintSlipToggle = !mintSlipToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                      </svg>
+                </div>
+                <span>
+                    Because of the rise price of land floors, it is necessary for you to pay 10% more to prevent the purchase from failing. And the excess payment amount will be returned after the transaction.
+                </span>
+            </div>
+            
+            
+            <div class="d-md-none mint-sm">
+                <div class="mint-tip">
+                    <img src="../../../assets/images/arrow-up.svg" class="svg-importent">Sell out 10, and the price rises by {{rise}}matic.
+                </div>
+                <div class="mint-slip-tip" *ngIf="mintSlipToggle">
+                    <div (click)="mintSlipToggle = !mintSlipToggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+                          </svg>
+                    </div>
+                    <span>
+                        Because of the rise price of land floors, it is necessary for you to pay 10% more to prevent the purchase from failing. And the excess payment amount will be returned after the transaction.
+                    </span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-center" *ngIf="!landInfo.selectedCard">
+                        <div class="font-importent">{{ landInfo.price }}<span>matic</span></div>
+                        <div class="font-second">Land Price</div>
+                    </div>
+                    <div class="mint-slip" [ngClass]="{'toggle': mintSlipToggle}" (click)="mintSlipToggle = !mintSlipToggle">+10% 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                      </svg>
+                    </div>
+                    <div class="text-center" *ngIf="landInfo.selectedCard">
+                        <div class="font-importent">{{ landInfo.cardPrice }}<span>matic</span></div>
+                        <div class="font-second">Favorable Price</div>
+                    </div>
+                    <button class="btn ml-1" [disabled]="landInfo.disabled" (click)="mint()">Click to mint</button>
+                </div>
+
+            </div>
+            
+            
+
+        </div>
+
+    </div>
+
+    
+   
+</div>
+
+
