@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { url } from 'inspector';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -8,12 +9,33 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  isShare: boolean = false;
 
-  constructor(private titleService: Title, private router: Router) {
+  constructor(private titleService: Title, private router: Router, private route: ActivatedRoute) {
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      let title = event.url.replace('/', '');
-      this.titleService.setTitle('OLand ' + title.slice(0,1).toUpperCase() + title.slice(1).toLowerCase());
+      
+      const urlArray = event.url.split('/');
+      let title = urlArray[1];
+      
+      if (title === 'detail') {
+        const name = urlArray[2];
+        const nameArray = name.split('.');
+        const suffix = nameArray[1];
+        if (suffix === 'v' || suffix === 'o') {
+          this.isShare = true;
+        } else {
+          this.isShare = false;
+        }
+      }
+      
+      this.titleService.setTitle('OLand ' + title);
     })
+    
+    
+  }
+
+  ngOnInit(): void {
+
   }
 }

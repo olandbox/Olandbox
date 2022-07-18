@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   chainName: 'matic',
   chainId: '0x89', //137
-  rpcUrl: ['https://polygon-mainnet.public.blastapi.io'],
+  rpcUrl: ['https://polygon-rpc.com', 'https://rpc-mainnet.matic.network'],
 
 
   contractAddress: '0x8e0564F8Ec6c2f6e636cac9a719927d59cc00624',
@@ -13,5 +13,6 @@ export const environment = {
   metaURI: 'https://metadata.oland.info/oland/',
   microWebsite: 'https://www.oland.info/',
 
-  slip: 1.1
+  slip: 1.1,
+  baseUrl: 'https://mint.oland.info/detail/',
 };

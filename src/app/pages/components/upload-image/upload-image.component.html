@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <p class="modal-title fw-bold fs-1">Select your images</p>
+  </div>
+  <div class="modal-body fs-5 text-break">
+    <div class="row">
+        <div class="col-5">
+            <div class="image-content" [ngClass]="url? 'image-content-full' : ''">
+                <div class="image-cover" (click)="file.click()">
+                    <img *ngIf="url" src="{{url}}" alt="">
+                </div>
+                <input type="file" accept="image/*"  (change)="upload($event.target.files)" #file style="display: none;">
+                
+                <!-- <img src="../../../../assets/images/detail1.png" alt=""> -->
+            </div>
+        </div>
+        <div class="col-7">
+            <p class="fs-4 text-white">Upload your images</p>
+            <p>The recommended size of your images is 300*300px, and the format of jpg, png, and gif is limited in 2mb.</p>
+        </div>
+    </div>
+  </div>

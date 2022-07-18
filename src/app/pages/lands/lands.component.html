@@ -1,0 +1,118 @@
+<div class="lands" [ngClass]="isSimplify ? 'max-land': ''">
+    
+    <ng-container *ngIf="!edit">
+        <div class="container py-3 py-md-5">
+            <ul class="d-flex justify-content-end" *ngIf="!isSimplify">
+                <li class="btn rounded-pill px-4 py-2" [ngClass]="suffix === 'p' ? 'btn-primary' : 'btn-second'" popoverClass="popover-class" (mouseenter)="p1.open()" (mouseout)="p1.close()" #p1="ngbPopover" ngbPopover="To be continued">Public</li>
+                <li class="btn rounded-pill ml-3 px-4 py-2" [ngClass]="suffix === 'verify' ? 'btn-primary' : 'btn-second'" (click)="switchTab('verify')">Offical</li>
+                <li class="btn rounded-pill ml-3 px-4 py-2" [ngClass]="suffix === 'owner' ? 'btn-primary' : 'btn-second'" popoverClass="popover-class" (mouseenter)="p2.open()" (mouseout)="p2.close()" #p2="ngbPopover" ngbPopover="To be continued">Private</li>
+            </ul>
+        </div>
+        <ng-container *ngIf="suffix === 'p'">
+            <ng-container *ngIf="(baseData|json)!='{}'; else Loading">
+                <app-thumb [suffix]="suffix" [baseData]="baseData"></app-thumb>
+                <app-intro [suffix]="suffix" [baseData]="baseData"></app-intro>
+                <app-community [suffix]="suffix" [baseData]="baseData"></app-community>
+                <div class="container"><hr class="my-40" *ngIf="this.account === this.name"></div>
+                <app-editor *ngIf="this.account === this.name"></app-editor>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="suffix === 'verify' || suffix === 'v'">
+            <ng-container *ngIf="(baseData|json)!='{}'; else Loading">
+                <app-thumb [suffix]="suffix" [baseData]="baseData"></app-thumb>
+                <app-intro [suffix]="suffix" [baseData]="baseData"></app-intro>
+                <app-community [suffix]="suffix" [baseData]="baseData"></app-community>
+                <div class="container"><hr class="my-40" *ngIf="this.account === this.name"></div>
+                <app-editor *ngIf="this.account === this.name"></app-editor>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="suffix === 'owner' || suffix === 'o'">
+            <ng-container *ngIf="(baseData|json)!='{}'; else Loading">
+                <app-thumb [suffix]="suffix" [baseData]="baseData"></app-thumb>
+                <app-intro [suffix]="suffix" [baseData]="baseData"></app-intro>
+                <app-community [suffix]="suffix" [baseData]="baseData"></app-community>
+                <div class="container"><hr class="my-40" *ngIf="this.account === this.name"></div>
+                <app-editor *ngIf="this.account === this.name"></app-editor>
+            </ng-container>
+        </ng-container>
+
+        <div class="lands-detail" *ngIf="(suffix === 'o' || suffix === 'v') && (baseData|json)!='{}'">
+            <div class="container d-flex justify-content-center align-items-center">
+                <button class="btn btn-primary rounded-pill" (click)="goDetail()">View Details</button>
+            </div>
+        </div>
+
+        <!-- 分享页无映射 -->
+        <div class="lands-detail" *ngIf="suffix === 'o' && (baseData|json)=='{}'">
+            <div class="container d-flex justify-content-center align-items-center">
+                No space! The page will be re-directed to detail in {{seconds}} seconds.
+            </div>
+        </div>
+
+        <!-- 详情页没有mint -->
+        <ng-container *ngIf="suffix === 'owner' && (baseData|json)=='{}'">
+            <app-thumb [page]="page" [baseData]="{name: name}"></app-thumb>
+            <app-intro></app-intro>
+            <app-community></app-community>
+            <div class="lands-mint">
+                <div class="container d-flex justify-content-between align-items-center">
+                    <span>There is still land that has not been minted by others, so go to mint to own this land.</span>
+                    <button class="btn flex-shrink-0">Click to mint</button>
+                </div>
+            </div>
+        </ng-container>
+
+        
+    </ng-container>
+
+
+    <!-- editor -->
+
+    <ng-container *ngIf="edit">
+        <div class="lands-edit-tabs mb-5">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center flex-wrap navbar-nav-scroll">
+                    <ul class="d-flex">
+                        <li class="mx-0 pl-2 pr-1">&nbsp;</li>
+                        <li [ngClass]="{'active': editTab === '1'}" (click)="editTab = '1'">Basic Information</li>
+                        <li [ngClass]="{'active': editTab === '2'}" (click)="editTab = '2'">Link</li>
+                        <li [ngClass]="{'active': editTab === '3'}" (click)="editTab = '3'">Mapping Management</li>
+                        <li class="mx-0 px-0">&nbsp;</li>
+                    </ul>
+                    <button class="btn btn-back flex-shrink-0 d-none d-lg-block" (click)="cancelEdit()">Back to Home</button>
+                </div>
+                <div class="d-flex justify-content-end mt-4 d-lg-none">
+                    <button class="btn btn-back flex-shrink-0" (click)="cancelEdit()">Back to Home</button>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="editTab === '1'">
+            <app-thumb [suffix]="suffix" [edit]="edit" [baseData]="baseData"></app-thumb>
+            <app-intro [suffix]="suffix" [edit]="edit" [baseData]="baseData"></app-intro>
+        </ng-container>
+        <ng-container *ngIf="editTab === '2'">
+            <app-community [suffix]="suffix" [edit]="edit" [baseData]="baseData"></app-community>
+        </ng-container>
+        <ng-container *ngIf="editTab === '3'">
+            <app-mapping [edit]="edit" [baseData]="baseData"></app-mapping>
+        </ng-container>
+    </ng-container>
+    
+</div>
+
+
+
+
+<ng-template #tip>
+    <div class=""></div>
+    <div class="account-card">
+      <div class="container d-flex align-items-center justify-content-center">
+        <div class="text-white">
+          Connect your wallet, please!
+        </div>
+      </div>
+    </div>
+</ng-template>
+<ng-template #loading>
+    Loading
+</ng-template>

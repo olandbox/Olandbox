@@ -1,0 +1,29 @@
+
+<div class="container">
+    <div class="lands-intro">
+        <div class="card" *ngIf="!edit">
+            <div *ngIf="suffix === 'owner' || baseData?.introStatus" class="content" style="white-space: pre-wrap;">{{ baseData?.intro ? baseData.intro : 'Nothing Here.' }}</div>
+            <div *ngIf="suffix !== 'owner' && !baseData?.introStatus" class="content" style="white-space: pre-wrap;">Nothing Shared</div>
+        </div>
+    
+        <div class="card" *ngIf="edit">
+            <div class="d-flex justify-content-between pb-3">
+                <div class="title fs-3">Introduction</div>
+                <div class="calc" *ngIf="intro"><span [ngClass]="intro?.length > 1000 ? 'text-danger' : 'text-white'">{{ intro?.length }}</span>/1000</div>
+            </div>
+            <hr>
+    
+    
+            <div *ngIf="!introEditing" class="content" (click)="introEdit()" style="white-space: pre-wrap;">{{ baseData?.intro ? baseData.intro : 'Nothing Here.' }}</div>
+            
+            <textarea *ngIf="introEditing" class="form-control form-control-edit" rows="8" (blur)="introEdit()" [(ngModel)]="intro" maxlength="1000" placeholder="Introduce the land..." autoFocus></textarea>
+    
+            <div class="d-flex flex-row-reverse">
+                <div class="custom-control custom-switch custom-switch-md">
+                    <input type="checkbox" class="custom-control-input" id="customIntro" [checked]="baseData?.introStatus" (change)="changeIntroStatus($event)">
+                    <label class="custom-control-label" for="customIntro">Show</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

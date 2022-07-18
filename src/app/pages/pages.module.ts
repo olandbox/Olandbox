@@ -9,6 +9,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 
 import { AppPipesModule } from "../pipes/app-pipes.module";
 
+
+
 // Components
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { HomeComponent } from "./home/home.component";
@@ -26,8 +28,19 @@ import { CardsComponent } from '../pages/components/cards/cards.component';
 import { DetailComponent } from './detail/detail.component';
 import { MintHistoryComponent } from './components/mint-history/mint-history.component';
 import { HistoryComponent } from './history/history.component';
+import { ThumbComponent } from './lands/thumb/thumb.component';
+import { IntroComponent } from './lands/intro/intro.component';
+import { CommunityComponent } from './lands/community/community.component';
+import { EditorComponent } from './lands/editor/editor.component';
+import { LandsComponent } from './lands/lands.component';
+import { MappingComponent } from './lands/mapping/mapping.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 // import { AlertComponent } from './components/alert/alert.component';
 
+import { DirectivesModule } from '../directives/directives.module'
 
 
 @NgModule({
@@ -47,6 +60,14 @@ import { HistoryComponent } from './history/history.component';
     DetailComponent,
     MintHistoryComponent,
     HistoryComponent,
+    ThumbComponent,
+    IntroComponent,
+    CommunityComponent,
+    EditorComponent,
+    LandsComponent,
+    MappingComponent,
+    ConfirmModalComponent,
+    UploadImageComponent,
     // AlertComponent
   ],
   imports: [
@@ -55,7 +76,9 @@ import { HistoryComponent } from './history/history.component';
     FormsModule,
     PagesRoutingModule,
     AppPipesModule,
-
+    NgbModule,
+    NgxSkeletonLoaderModule,
+    DirectivesModule
   ],
   exports: [
     TopBarComponent,

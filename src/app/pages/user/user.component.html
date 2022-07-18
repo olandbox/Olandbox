@@ -36,7 +36,7 @@
           </div>
           <div class="foot">
             <button class="btn btn-opensea" (click)="goVoucherOpensea(card)"><img src="../../../assets/images/opensea.png" alt=""> opensea</button>
-            <a class="btn btn-mint" routerLink="/mint">Click to mint</a>
+            <a class="btn btn-mint" routerLink="/mint" [queryParams]="{voucher: card.cardId}">Click to mint</a>
           </div>
         </div>
       </div>

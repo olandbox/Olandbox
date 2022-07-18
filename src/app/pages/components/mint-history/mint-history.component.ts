@@ -41,36 +41,11 @@ export class MintHistoryComponent implements OnInit, OnDestroy {
     })
   }
 
-  addToList() {
-    let split = 0; // 从第几条更新的数据
-    this.pollHistoryList.forEach((element, index) => {
-      let isExist = this.historyList.some(item => item.originalName === element.originalName);
-      if (isExist) {
-        this.historyList.forEach((item, i) => {
-          if (item.originalName === element.originalName) {
-            item.time = element.time
-          }
-        })
-        split = index;
-      } else {
-        this.clearPolling();
-        setTimeout(() => {
-          this.historyList.unshift(element);
-
-          if (index === this.pollHistoryList.length - 1) {
-            this.polling();
-          }
-        }, (index - split) * 1000)
-      }
-    });
-  }
 
   polling() {
     this.pollTimer = setInterval(() => {
       this.httpService.getMintHistory().then(res => {
-        this.pollHistoryList = res
-
-        this.addToList()
+        this.historyList = res.reverse();
       })
     }, 10000)
   }

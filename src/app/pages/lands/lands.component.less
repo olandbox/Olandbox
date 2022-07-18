@@ -1,0 +1,187 @@
+.lands {
+    padding-bottom: 40px;
+    background-color: #09101A;
+    min-height: calc(100vh - 160px);
+    overflow: hidden;
+    .btn-primary {
+        color: #fff;
+        background: linear-gradient(-90deg, rgba(32, 80, 203, 0.8), #2E62E6);
+    }
+    .btn-second {
+        color: #fff;
+        background-color: #0F1926;
+        border: 1px solid #192F4C;
+        &:hover {
+            background-color: #192F4C;
+        }
+    }
+
+
+    .lands-edit-tabs {
+        padding: 68px 0 22px 0;
+        background: #0F1926;
+        .navbar-nav-scroll {
+            overflow-x: auto;
+            &::-webkit-scrollbar {
+                width: 3px;               /* width of the entire scrollbar */
+                height: 3px;
+            }
+              
+            &::-webkit-scrollbar-track {
+                background: #101011;        /* color of the tracking area */
+            }
+              
+            &::-webkit-scrollbar-thumb {
+                background-color: #192536;    /* color of the scroll thumb */
+                border-radius: 2px;       /* roundness of the scroll thumb */
+            }
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            font-size: 24px;
+            color: #fff;
+            li {
+                list-style: none;
+                margin-right: 20px;
+                cursor: pointer;
+                flex-shrink: 0;
+                padding: 20px 30px;
+                border-radius: 10px;
+            }
+            .active {
+                color: #2E8AE6;
+                background-color: #09101A;
+            }
+        }
+        .btn-back {
+            padding: 0 40px;
+            background: #2B68AC;
+            border-radius: 30px;
+            font-size: 18px;
+            color: #fff;
+            line-height: 60px;
+            height: 60px;
+        }
+    }
+    .lands-mint, .lands-detail {
+        background: #141F33;
+        padding: 56px 0;
+        margin-top: 80px;
+        color: #fff;
+        font-size: 20px;
+        .btn {
+            background: linear-gradient(90deg, #2153D3, #4866B0);
+            border-radius: 5px;
+            font-size: 16px;
+            color: #FFFFFF;
+            height: 50px;
+            &:hover {
+                background: linear-gradient(90deg, #285ce0, #506fbd);
+            }
+        }
+    }
+    .lands-detail {
+        background: transparent;
+    }
+}
+.lands, .max-land {
+    min-height: 100vh;
+}
+.account-card {
+    margin-bottom: calc(100vh - 337px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    background: #0D1926;
+    color: #fff;
+    font-size: 30px;
+    .people {
+        margin-right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #09101A;
+        border-radius: 50%;
+        color: #18314D;
+        svg {
+            width: 60px;
+            height: 60px;
+
+        }
+    }
+}
+.my-40 {
+    margin: 40px 0;
+}
+
+@media (max-width: 991.98px) {
+    .lands {
+        .lands-edit-tabs {
+            padding: 20px 0 10px 0;
+            ul {
+                font-size: 20px;
+                li {
+                    margin-right: 40px;
+                }
+            }
+            .btn-back {
+                padding: 0 30px;
+                font-size: 16px;
+                line-height: 40px;
+                height: 40px;
+            }
+        } 
+    }
+}
+@media (max-width: 767.98px) {
+    .lands {
+        .lands-edit-tabs {
+            ul {
+                font-size: 16px;
+                li {
+                    margin-right: 20px;
+                    padding: 10px 15px;
+                }
+            }
+            .btn-back {
+                font-size: 14px;
+            }
+        } 
+    }
+    .account-card {
+        font-size: 15px;
+        height: 90px;
+        margin-bottom: 20px;
+        .people {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            svg {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    .lands {
+        .lands-edit-tabs {
+            
+            .container {
+                padding: 0;
+            }
+            ul {
+                font-size: 16px;
+                li {
+                    margin-right: 20px;
+                }
+            }
+            .btn-back {
+                font-size: 14px;
+                border-radius: 20px 0 0 20px;
+            }
+        } 
+    }
+}

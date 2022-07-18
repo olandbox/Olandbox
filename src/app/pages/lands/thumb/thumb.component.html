@@ -1,0 +1,30 @@
+<div class="container lands-thumb">
+    <div class="cover" [ngClass]="{'edit': edit}">
+        <div class="avator" *ngIf="edit || suffix === 'owner' || baseData?.logoStatus">
+            <img *ngIf="baseData?.logo" [src]="baseData.logo" alt="">
+            <div *ngIf="!baseData?.logo" class="people">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+              </div>
+            <div class="upload" *ngIf="edit" (click)="upload()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="content" *ngIf="edit || suffix === 'owner'|| baseData?.logoStatus">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+            <div class="title text-truncate">{{ baseData?.name }}</div>
+            <div class="custom-control custom-switch custom-switch-md" *ngIf="edit">
+                <input type="checkbox" class="custom-control-input" id="thumbSwitch" [checked]="baseData?.logoStatus" (change)="changeLogoStatus($event)">
+                <label class="custom-control-label" for="thumbSwitch">Show</label>
+            </div>
+        </div>
+        <!-- <div class="gene text-truncate">gene: 0xB6C2578CF5EAE0BD7E23A08ED89558AC0B908BB3B5380893C82422BA483A83F9</div> -->
+    </div>
+</div>
+

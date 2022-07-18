@@ -37,7 +37,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.less"
             ],
-            "scripts": [],
+            "scripts": ["src/assets/js/ks3jssdk.js"],
             "allowedCommonJsDependencies": [
               "@walletconnect/web3-provider",
               "@walletconnect/window-metadata",

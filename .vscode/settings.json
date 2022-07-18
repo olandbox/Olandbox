@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.port": 5502,
+  "editor.codeActionsOnSave": { // 保存自动修复代码格式
+    "source.fixAll.eslint": true
+  }
+  
+}

@@ -7,7 +7,7 @@
 
             <ul class="nav col-auto me-md-auto ml-auto mb-2 mb-md-0 ms-5 justify-content-center d-none d-md-flex">
                 <ng-container *ngFor="let item of menuList">
-                    <li *ngIf="item.isShow" role="button"><a class="nav-link px-3" [ngClass]="currentLink == item.link ? 'text-point' : 'text-white'" (click)="link(item)">{{ item.title }}</a></li>
+                    <li *ngIf="item.isShow" role="button"><a class="nav-link px-3" [ngClass]="currentLink.indexOf(item.link) > -1 ? 'text-point' : 'text-white'" (click)="link(item)">{{ item.title }}</a></li>
                 </ng-container>
                 
             </ul>

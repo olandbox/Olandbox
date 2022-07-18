@@ -6,6 +6,7 @@ import { MerkletreeComponent } from './tool-pages/merkletree/merkletree.componen
 import { UserComponent } from './user/user.component';
 import { DetailComponent } from './detail/detail.component';
 import { HistoryComponent } from './history/history.component';
+import { LandsComponent } from './lands/lands.component';
 
 
 const routes: Routes = [
@@ -13,8 +14,11 @@ const routes: Routes = [
   { path: 'mint', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'land', component: UserComponent },
-  { path: 'detail/:name', component: DetailComponent },
   { path: 'history', component: HistoryComponent },
+  { path: 'detail/:name', component: LandsComponent},
+  { path: 'detail/:name/edit', component: LandsComponent, data: {edit: true}},
+  // { path: 'share/:name', component: LandsComponent, data: {page: 'share'}},
+  // { path: 'admin', component:  LandsComponent, data: {page: 'profile'}},
 
   { path: 'merkletree', component: MerkletreeComponent },
 ];

@@ -83,7 +83,11 @@ export class ContractService  {
 
         if (this.web3Modal.cachedProvider) {
             this.initWeb();
+            
         }
+
+
+        
 
     }
 
@@ -101,7 +105,8 @@ export class ContractService  {
 
     async initAccount() {
         this.accounts = await this.web3js.eth.getAccounts();
-        this._account$.next(this.accounts[0] || '');
+        this._account$.next(this.accounts[0].toLowerCase() || '');
+        console.log('init account')
     }
   
     async initWeb() {
@@ -123,19 +128,17 @@ export class ContractService  {
         } catch (error) {
             console.log(error)
         }
+
+         // todo signatuer
+        //  const message = 'abc';
+        //  console.log('message: ' + this.web3js.utils.sha3(message))
+        //  this.web3js.eth.personal.sign(this.web3js.utils.sha3(message), "0xFA22F2Bf7F3fd1C3d355456d7FE2598bD3a8Ef38".toLowerCase()).then((res) => console.log('signature: ' + res))
         
     }
 
     async connectAccount() {
         this.web3Modal.clearCachedProvider();
         await this.initWeb();
-
-       
-        // todo signatuer
-        // const message = 'eth suck';
-        // console.log('message: ' + this.web3js.utils.sha3(message))
-        // this.web3js.eth.personal.sign(this.web3js.utils.sha3(message), "0xFA22F2Bf7F3fd1C3d355456d7FE2598bD3a8Ef38".toLowerCase()).then((res) => console.log('signature: ' + res))
-
     }
 
     async disconnectAccount() {
@@ -196,6 +199,22 @@ export class ContractService  {
         }
     }
 
+    async hexMessage(message) {
+        return this.web3js.utils.sha3(message)
+    }
+
+    async signature(hexMessage, address) {
+        return this.web3js.eth.personal.sign(hexMessage, address.toLowerCase(), '', (error) => {
+            if (error) {
+                this.alertService.create({
+                    body: error.message,
+                    color: 'danger',
+                    time: 5000
+                })
+            }
+        });
+    }
+
 
     //------------------ contract -----------------------------
     async getOpenseaUriByName(name: string): Promise<string> {
@@ -243,6 +262,7 @@ export class ContractService  {
         let options = {
             from: this.accounts[0],
             gas: 480000,
+            gasPrice: await this.web3.eth.getGasPrice() * 2,
             value: price
         }
         return this.mainContract.methods.register(name).send(options)
@@ -267,8 +287,10 @@ export class ContractService  {
         let options = {
             from: this.accounts[0],
             gas: 480000,
+            gasPrice: await this.web3.eth.getGasPrice() * 2,
             value: cardPrice
         }
+        console.log(options, await this.web3.eth.getGasPrice())
         return this.mainContract.methods.registerByVoucher(name, cardId).send(options)
             .on('receipt', (receipt) => {
                 this.modalService.open(
