@@ -5,6 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,7 +42,9 @@ import { DirectivesModule } from './directives/directives.module';
     NgxSkeletonLoaderModule,
     AppPipesModule,
     AlertModule,
-    DirectivesModule
+    DirectivesModule,
+    ClipboardModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,20 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.bg {
-    background: url('./assets/images/bg-new.jpg') no-repeat center;
-    background-size: cover;
-    min-height: 100vh;
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;caret-color: transparent; }
+input, textarea {caret-color: #fff;}
 
-    overflow: hidden;
-}
-.min-vh-90 {
-    min-height: calc(100vh - 72px - 80px);
+.main {
+    min-height: 100vh;
+    padding: 72px 0 80px 0;
+    margin: -72px 0 -80px 0;
 }
 @media (max-width: 575.98px) {
-    .min-vh-90 {
-        min-height: calc(100vh - 58px);
+    .main {
+        padding: 58px 0 0 0;
+        margin: -58px 0 0 0;
     }
 }
 
@@ -87,6 +85,15 @@ hr {
     color: #666D80;
     font-size: 20px;
 }
+.dark .modal-header .close {
+    border: 0;
+    outline: none;
+    margin-top: -0.3rem;
+    span {
+        color: #fff;
+        font-size: 2rem;
+    }
+}
 .dark .modal-header {
     align-self: center;
     justify-content: center;
@@ -99,20 +106,22 @@ hr {
     justify-content: center;
 }
 
-@media screen and (max-width: 992px) {
+
+@media screen and (max-width: 991.98px) {
     html, body {
         font-size: 14px;
     }
     
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767.98px) {
     .title-text h1 {
         margin: 2.5rem 0 0 0;
         font-size: 2.5rem;
     }
+    
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 478.98px) {
     .title-text h1 {
         margin: 2rem 0 0 0;
         font-size: 2rem;
@@ -133,6 +142,7 @@ hr {
 /* custom switch for md */
 
 .custom-switch.custom-switch-md .custom-control-label {
+    top: -5px;
     padding-right: 3.2rem;
     padding-bottom: 0.2rem;
     padding-top: 0.3rem;

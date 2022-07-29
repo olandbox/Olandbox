@@ -18,8 +18,8 @@ export const environment = {
   microWebsite: 'https://test.oland.info/',
 
   slip: 1.1, // 滑点
-
-  baseUrl: 'https://test.mint.oland.info/detail/',
+  polygonGasApi: 'https://gasstation-mumbai.matic.today/v2'
+  
 
   // chainName: 'matic',
   // chainId: '0x89', //137

@@ -14,19 +14,23 @@ export class AppComponent implements OnInit {
 
   constructor(private titleService: Title, private router: Router, private route: ActivatedRoute) {
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      
-      const urlArray = event.url.split('/');
-      let title = urlArray[1];
-      
+      console.log(event.url)
+      let url = decodeURI(event.url).replace(/\s{2,}/g, ' ').toLocaleLowerCase();
+      const urlArray = url.split('/');
+      const title = urlArray[1];
+      const shareReg = new RegExp("(.o|.v)$")
+
       if (title === 'detail') {
-        const name = urlArray[2];
-        const nameArray = name.split('.');
-        const suffix = nameArray[1];
-        if (suffix === 'v' || suffix === 'o') {
+        const land = urlArray[2];
+        if (shareReg.test(land)) {
           this.isShare = true;
         } else {
           this.isShare = false;
         }
+      } else if (shareReg.test(title)) {
+        this.isShare = true;
+      } else {
+        this.isShare = false;
       }
       
       this.titleService.setTitle('OLand ' + title);

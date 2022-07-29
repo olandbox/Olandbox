@@ -1,0 +1,8 @@
+<div class="row">
+    <div class="col-12">
+        <p class="text-white fw-bold mb-4" *ngIf="landInfo.owner">Sorry, the oland has already been mint. Please search for other content to mint.</p>
+        <p class="text-white fw-bold mb-4" *ngIf="!landInfo.owner && landInfo.logicLength > 8">Congratulations! "{{ landInfo.standardName }}" hasn't been mint yet, you can mint it.</p>
+        <p class="text-white fw-bold mb-4" *ngIf="!landInfo.owner && landInfo.logicLength >=6 && landInfo.logicLength < 8">Please mint this land after choosing {{landInfo.logicLength}} L land voucher </p>
+    </div>
+</div>
+<hr>

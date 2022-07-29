@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertService } from 'src/app/service/alert.service';
 import { HttpService } from 'src/app/service/http.service';
 
@@ -15,8 +16,10 @@ export class UploadImageComponent implements OnInit {
   @Input() maxHeight: number = 300;
   @Output() urlEvent = new EventEmitter<string>()
   url: string = '';
+  isUploading: boolean = false;
 
   constructor(
+    public activeModal: NgbActiveModal,
     private httpService: HttpService,
     private alertService: AlertService
   ) { }
@@ -27,6 +30,7 @@ export class UploadImageComponent implements OnInit {
 
 
   async upload(files: FileList) {
+    this.isUploading = true;
     const fileToUpload: File = files.item(0);
 
     // 大小限制
@@ -35,14 +39,16 @@ export class UploadImageComponent implements OnInit {
       this.alertService.create({
         body: `The image size is over ${size}MB`,
         color: 'danger',
-        time: 4000
+        time: 2000
       })
+      this.isUploading = false;
       return;
     }
 
     this.httpService.uploadImg(fileToUpload).subscribe((res: any) => {
       this.url = res.data.url || '';
       this.urlEvent.emit(this.url);
+      this.isUploading = false;
     })
 
     // 宽高限制

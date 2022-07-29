@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NavigationEnd, ActivatedRoute, Router  } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.less']
+  styleUrls: ['./top-bar.component.less'],
 })
 export class TopBarComponent implements OnInit {
 
@@ -48,9 +48,19 @@ export class TopBarComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((res: NavigationEnd) => {
-      this.currentLink = res.urlAfterRedirects;
-      console.log(this.currentLink)
+      this.currentLink = decodeURI(res.urlAfterRedirects).trim().replace(/\s{2,}/g, ' ').toLowerCase();
     });
+  }
+
+  collapseMenu() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+    if (this.isMenuCollapsed) {
+      (document.querySelector('.bg') as HTMLElement).style.maxHeight = '';
+      (document.querySelector('.bg') as HTMLElement).style.overflow = '';
+    } else {
+      (document.querySelector('.bg') as HTMLElement).style.maxHeight = '100vh';
+      (document.querySelector('.bg') as HTMLElement).style.overflow = 'hidden';
+    }
   }
 
   async connect(): Promise<boolean>  {
@@ -79,17 +89,21 @@ export class TopBarComponent implements OnInit {
 
   async link(link: any): Promise<void> {
     this.isMenuCollapsed = true;
+    (document.querySelector('.bg') as HTMLElement).style.maxHeight = '';
+    (document.querySelector('.bg') as HTMLElement).style.overflow = '';
     if (link.navigation) {
       if (link.link === '/detail') {
         if (!this.account) {
           const isConnect = await this.connect();
-          !!isConnect ? this.router.navigate([link.link, this.account + '.verify']) : this.link(link);
+          !!isConnect ? this.router.navigate([link.link, this.account + '.verify', 'edit']) : this.link(link);
         } else {
-          this.router.navigate([link.link, this.account + '.verify']);
+          this.router.navigate([link.link, this.account + '.verify', 'edit']);
         }
       } else {
         this.router.navigateByUrl(link.link);
       }
+      (document.querySelector('.bg') as HTMLElement).style.maxHeight = '';
+      (document.querySelector('.bg') as HTMLElement).style.overflow = '';
     } else {
       global.window.location.href = link.link;
     }

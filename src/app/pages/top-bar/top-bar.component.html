@@ -29,7 +29,7 @@
             
             <!-- mobie -->
 
-            <button class="navbar-toggler d-block d-md-none" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+            <button class="navbar-toggler d-block d-md-none" type="button" (click)="collapseMenu()">
                 &#9776;
             </button>
             <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
@@ -41,16 +41,13 @@
                     
                     <li class="d-flex justify-content-around">
                         <a class="text-white nav-link d-flex align-items-center" href="https://twitter.com" target="_blank">
-                            <img src="./assets/images/twitter.png" style="width: 2.5rem" />
-                            <span>Twitter</span>         
+                            <img src="./assets/images/twitter.png" style="width: 2.5rem" />   
                         </a>
                         <a class="text-white nav-link d-flex align-items-center" href="https://discord.com" target="_blank">
                             <img src="./assets/images/discord.png" style="width: 2.5rem"/>
-                            <span>Discord</span>
                         </a>
                         <a class="text-white nav-link d-flex align-items-center" href="https://telegram.org" target="_blank">
                             <img src="./assets/images/bxl-telegram.png" style="width: 2.5rem"/>
-                            <span>Telegram</span>
                         </a>
                     </li>
                 </ul>

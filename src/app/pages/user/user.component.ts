@@ -14,7 +14,10 @@ import { environment } from 'src/environments/environment';
 export class UserComponent implements OnInit {
 
   account: string = '';
-  lands: any[] = [];
+  tab: number = 1;
+  // lands: any[] = [];
+  ownLands: any[] = [];
+  verifyLands: any[] = [];
   cards: any[] = [];
 
 
@@ -37,12 +40,21 @@ export class UserComponent implements OnInit {
       this.account = account;
       if (account) {
         this.getCards();
-        this.getLands();
+        this.getPrivateLands();
+        this.getVerifyLand();
       } else {
 
       }
       
     })
+  }
+
+  changeTab(tab: number) {
+    this.tab = tab;
+  }
+
+  randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
   async getCards() {
@@ -75,27 +87,56 @@ export class UserComponent implements OnInit {
     })
   }
 
-  async getLands() {
-    this.isLandsLoading = true;
-    const balanceCount = await this.contractService.getUserBalance(this.account);
-
-    for(let i = 0; i < balanceCount; i++) {
-      const token = await this.contractService.getTokenByIndex(i);
-      const uriStr = await this.contractService.getTokenUri(token)
-      const uri = new URL(uriStr);
-      this.httpService.getMetadata(uri.pathname).then(metadata => {
-        if (i === balanceCount - 1) {
-          this.isLandsLoading = false;
-        }
-        this.lands.push(metadata)
-      })
-    }
-    
+  getPrivateLands() {
+    const matchQuery = this.httpService.getOwnLand(this.account);
+    this.httpService.getDatabase(matchQuery).subscribe(res => {
+      res.forEach(element => {
+        this.ownLands.push({
+          name: element[0].properties.name,
+          num: this.randomIntFromInterval(1,3)
+        });
+      });
+    })
   }
+
+  getVerifyLand() {
+    const matchQuery = this.httpService.getVerifyLand(this.account);
+    this.httpService.getDatabase(matchQuery).subscribe(res => {
+      res.forEach(element => {
+        this.verifyLands.push({
+          name: element[0].properties.name,
+          num: this.randomIntFromInterval(1,3)
+        })
+      });
+    })
+  }
+
+  // async getLands() {
+  //   this.isLandsLoading = true;
+  //   const balanceCount = await this.contractService.getUserBalance(this.account);
+
+  //   for(let i = 0; i < balanceCount; i++) {
+  //     const token = await this.contractService.getTokenByIndex(i);
+  //     const uriStr = await this.contractService.getTokenUri(token);
+  //     const uri = new URL(uriStr);
+  //     this.httpService.getMetadata(uri.pathname).then(metadata => {
+  //       if (i === balanceCount - 1) {
+  //         this.isLandsLoading = false;
+  //       }
+  //       const randomNum = this.randomIntFromInterval(1,3);
+  //       metadata.num = randomNum;
+  //       this.lands.push(metadata)
+  //     }, err => {
+  //       console.log(err)
+  //     })
+  //   }
+    
+  // }
 
   logout() {
     this.cards = [];
-    this.lands = [];
+    this.ownLands = [];
+    this.verifyLands = [];
   }
 
   async goVoucherOpensea(card) {
@@ -109,8 +150,12 @@ export class UserComponent implements OnInit {
     global.window.open(uri);
   }
 
-  async goDetail(name: string) {
-    this.router.navigate(['/detail', name])
+  async goDetail(name: string, belong: string) {
+    this.router.navigate(['/detail', name + '.' + belong])
+  }
+
+  goDc() {
+    global.window.open('https://discord.gg/2pgsTcfyDH', '_blank');
   }
 
 

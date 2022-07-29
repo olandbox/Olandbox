@@ -3,7 +3,7 @@
     .cover {
         position: relative;
         border-radius: 10px;
-        background-color: #AC2B3B;
+        background-color: #2E4C99;
         height: 200px;
         .avator {
             position: absolute;
@@ -56,33 +56,60 @@
     .cover.edit {
         background-color: #2EA8E6;
     }
+    .cover.public {
+        background-color: #1F8599;
+    }
+    .cover.owner {
+        background-color: #80420D;
+    }
     .content {
-        padding: 24px 0 0 240px;
+        padding: 16px 0 0 240px;
         color: #fff;
         min-height: 100px;
         .title {
+            width: 100%;
             font-size: 24px;
-            font-weight: bold;
         }
         .custom-control {
             margin: 0 0 0 auto;
         }
-        .gene {
+        .alias {
+            display: flex;
+            align-items: center;
             font-size: 14px;
             color: #8F98B3;
         }
+        .form-control-edit {
+            padding: 0;
+            height: 24px;
+            background: #09101a;
+            color: #fff;
+            font-weight: bold;
+            border: 0;
+            outline: none;
+            &:focus {
+                box-shadow: none;
+            }
+        }
+        .btn-edit {
+            background-color: transparent;
+            border: 0;
+            color: #666D80;
+        }
     }
+    
 }
 @media (max-width: 767.98px) {
     .lands-thumb {
+        position: relative;
         .cover {
             height: 100px;
             .avator {
                 width: 80px;
                 height: 80px;
                 border: 2px solid #09101A;
-                bottom: -40px;
-                left: calc(50% - 40px);
+                bottom: -15px;
+                left: 20px;
                 font-size: 16px;
                 &::after {
                     line-height: 80px;  
@@ -98,15 +125,38 @@
                     }
                 }
             }
+            .avator.avator-edit {
+                left: calc(50% - 40px);
+            }
         }
         .content {
-            padding: 50px 15px 0 15px;
+            position: absolute;
+            left: 120px;
+            bottom: 6px;
+            right: 10px;
+
+            padding: 30px 15px 0 15px;
             min-height: 50px;
             .title {
                 font-size: 16px;
             }
-            .gene {
+            .alias {
                 font-size: 12px;
+            }
+        }
+        .content.content-edit {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            padding: 30px 15px 0 15px;
+            min-height: 50px;
+            .title {
+                font-size: 15px;
+                
+            }
+            .alias {
+                font-size: 11px;
             }
         }
     }

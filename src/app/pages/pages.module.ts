@@ -38,9 +38,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 // import { AlertComponent } from './components/alert/alert.component';
 
-import { DirectivesModule } from '../directives/directives.module'
+import { DirectivesModule } from '../directives/directives.module';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
+import { MintedComponent } from './home/minted/minted.component';
+import { SearchTipComponent } from './home/search-tip/search-tip.component';
+import { LandsFooterComponent } from './lands/lands-footer/lands-footer.component';
 
 
 @NgModule({
@@ -68,6 +74,10 @@ import { DirectivesModule } from '../directives/directives.module'
     MappingComponent,
     ConfirmModalComponent,
     UploadImageComponent,
+    MintedComponent,
+    SearchTipComponent,
+    LandsFooterComponent,
+
     // AlertComponent
   ],
   imports: [
@@ -78,7 +88,8 @@ import { DirectivesModule } from '../directives/directives.module'
     AppPipesModule,
     NgbModule,
     NgxSkeletonLoaderModule,
-    DirectivesModule
+    DirectivesModule,
+    DragDropModule
   ],
   exports: [
     TopBarComponent,

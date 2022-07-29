@@ -13,6 +13,7 @@ import { WEB3 } from "./provider";
 import { SucessModalComponent} from '../pages/components/sucess-modal/sucess-modal.component'
 import { FailModalComponent } from '../pages/components/fail-modal/fail-modal.component';
 import { threadId } from 'worker_threads';
+import { HttpService } from './http.service';
 
 
 
@@ -47,7 +48,8 @@ export class ContractService  {
     constructor(
         @Inject(WEB3) private web3: any,
         private modalService: NgbModal,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private httpService: HttpService
     ) {
         // set web3 modal
         let rpc = {};
@@ -98,7 +100,8 @@ export class ContractService  {
         if (!this.chainStatus) {
             this.alertService.create({
                 body: 'Switch chain please!',
-                color: 'warning'
+                color: 'warning',
+                time: 4000
             })
         }
     }
@@ -192,7 +195,7 @@ export class ContractService  {
                 this.alertService.create({
                     body: "switch chain failed",
                     color: 'danger',
-                    time: 3000
+                    time: 2000
                 })
                 console.log(error)
             }
@@ -258,11 +261,23 @@ export class ContractService  {
         }
     }
 
+    // return wei string
+    async getGasFee() {
+        const polygon = await this.httpService.getPolygonGas();
+        if (polygon.fast && polygon.fast.maxFee) {
+            const polygonGas = Math.ceil(polygon.fast.maxFee) + '';
+            const polygonGasWei = this.web3js.utils.toWei(polygonGas, 'gwei');
+            return polygonGasWei;
+        } else {
+            return await this.web3.eth.getGasPrice() * 1.5
+        }
+    }
+
     async mint(name: string, price: string) {
         let options = {
             from: this.accounts[0],
-            gas: 480000,
-            gasPrice: await this.web3.eth.getGasPrice() * 2,
+            gas: 960000,
+            gasPrice: await this.getGasFee(),
             value: price
         }
         return this.mainContract.methods.register(name).send(options)
@@ -284,13 +299,13 @@ export class ContractService  {
     }
 
     async mintByCard(name: string, cardPrice: string, cardId: number) {
+        
         let options = {
             from: this.accounts[0],
-            gas: 480000,
-            gasPrice: await this.web3.eth.getGasPrice() * 2,
+            gas: 960000,
+            gasPrice: await this.getGasFee(),
             value: cardPrice
         }
-        console.log(options, await this.web3.eth.getGasPrice())
         return this.mainContract.methods.registerByVoucher(name, cardId).send(options)
             .on('receipt', (receipt) => {
                 this.modalService.open(

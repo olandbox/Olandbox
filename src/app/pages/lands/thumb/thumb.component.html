@@ -1,6 +1,7 @@
 <div class="container lands-thumb">
-    <div class="cover" [ngClass]="{'edit': edit}">
-        <div class="avator" *ngIf="edit || suffix === 'owner' || baseData?.logoStatus">
+    <div class="cover" [ngClass]="{'edit': edit, 'public': suffix === 'p', owner: suffix === 'owner'}">
+        <div class="avator" [ngClass]="{'avator-edit': edit}" *ngIf="edit || baseData?.logoStatus">
+            
             <img *ngIf="baseData?.logo" [src]="baseData.logo" alt="">
             <div *ngIf="!baseData?.logo" class="people">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -16,15 +17,37 @@
             </div>
         </div>
     </div>
-    <div class="content" *ngIf="edit || suffix === 'owner'|| baseData?.logoStatus">
-        <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-            <div class="title text-truncate">{{ baseData?.name }}</div>
-            <div class="custom-control custom-switch custom-switch-md" *ngIf="edit">
+
+
+    <div class="content" [ngClass]="{'content-edit': edit}" *ngIf="edit || baseData?.logoStatus">
+        <div class="mb-1">
+            <div class="title text-break" *ngIf="suffix !== 'o' && suffix !== 'v'">{{ baseData.name }}</div>
+            <div class="title text-break" *ngIf="suffix === 'o' || suffix === 'v'" style="width: 100%">{{ baseData.alias || baseData.name }}</div>
+        </div>
+
+        <div class="alias" *ngIf="!edit && suffix !== 'o'&& suffix !== 'v'">
+            <span *ngIf="!aliasEditing" class="d-inline-block text-break ">{{ baseData.alias }}</span>
+        </div>
+
+        <div class="alias text-truncate" *ngIf="edit">
+            <input *ngIf="aliasEditing" type="text" class="form-control form-control-edit" maxlength="30" [(ngModel)]="baseData.alias" (blur)="blurAlias()" autoFocus>
+
+            <span *ngIf="!aliasEditing" class="d-inline-block text-truncate " (click)="editAlias()" >{{ baseData.alias || 'name' }}</span>
+        
+            <button *ngIf="!aliasEditing" class="btn-edit" (click)="editAlias()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="text-right mt-3" *ngIf="edit">
+            <div class="custom-control custom-switch custom-switch-md">
                 <input type="checkbox" class="custom-control-input" id="thumbSwitch" [checked]="baseData?.logoStatus" (change)="changeLogoStatus($event)">
-                <label class="custom-control-label" for="thumbSwitch">Show</label>
+                <label class="custom-control-label" for="thumbSwitch"></label>
             </div>
         </div>
-        <!-- <div class="gene text-truncate">gene: 0xB6C2578CF5EAE0BD7E23A08ED89558AC0B908BB3B5380893C82422BA483A83F9</div> -->
     </div>
+
 </div>
 

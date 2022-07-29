@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { ContractService } from 'src/app/service/contract.service';
 
 
 @Component({
@@ -6,17 +7,29 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './logout-board.component.html',
   styleUrls: ['./logout-board.component.less']
 })
-export class LogoutBoardComponent implements OnInit {
+export class LogoutBoardComponent implements OnInit, AfterViewInit {
 
 
 
-  @Input() defaultInfo:any = null;
+  defaultInfo:any = null;
 
-  constructor() {}
+  constructor(public contractService: ContractService) {}
 
   ngOnInit(): void {
 
   }
-  
+
+  ngAfterViewInit() {
+    this.getDefaultInfo();
+  }
+
+  async getDefaultInfo() {
+    this.defaultInfo = {
+      'sixPrice': await this.contractService.getPriceByLen(6),
+      'sevenPrice': await this.contractService.getPriceByLen(7),
+      'eightPrice': await this.contractService.getPriceByLen(8),
+      'amount': await this.contractService.getTotal()
+    }
+  }
 
 }

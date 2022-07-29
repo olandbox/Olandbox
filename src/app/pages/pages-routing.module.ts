@@ -14,13 +14,16 @@ const routes: Routes = [
   { path: 'mint', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'land', component: UserComponent },
-  { path: 'history', component: HistoryComponent },
+  { path: 'past', component: HistoryComponent },
   { path: 'detail/:name', component: LandsComponent},
   { path: 'detail/:name/edit', component: LandsComponent, data: {edit: true}},
-  // { path: 'share/:name', component: LandsComponent, data: {page: 'share'}},
-  // { path: 'admin', component:  LandsComponent, data: {page: 'profile'}},
+  { path: ':name', component: LandsComponent},
+  { path: ':name/edit', component: LandsComponent, data: {edit: true}},
+
 
   { path: 'merkletree', component: MerkletreeComponent },
+
+
 ];
 
 @NgModule({

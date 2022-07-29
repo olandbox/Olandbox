@@ -63,9 +63,17 @@
         background-color:#051c38;
     }
     .failed {
-        padding: 100px 50px;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 30px;
         background: #0D1926; 
         border-radius: 10px;
+        color: #666D80;
+        h2 {font-size: 24px;}
+        p {
+            font-size: 16px;
+        }
     }
 }
 .voucher-group {
@@ -78,6 +86,7 @@
     border-radius: 10px;
     .quantity {
         padding: 0 10px;
+        min-width: 6em;
         text-align: center;
         strong {font-size: 42px; color: #3257B4;}
         div {font-size: 14px; color: #666D80;}
@@ -88,6 +97,7 @@
         justify-content: space-between;
         flex: 1 1 auto;
         padding: 10px 40px;
+        margin-bottom: 0;
         border-radius: 60px 10px 10px 60px;
         background-color: #0D2440;
         img {
@@ -170,6 +180,42 @@
         }
     }
 }
+.voucher-group-disable {
+    background-color: #333333;
+    .quantity {
+        strong {color: #B3B3B3;}
+        div {color: #666D7F;}
+    }
+    .info {
+        background-color: #1A1A1A;
+        img {
+            filter: grayscale(100%);
+        }
+        .percent {
+            background: #333333;
+            color: #B3B3B3;
+        }
+        .label {
+            .checkmark {
+                border: 1px solid #333333;
+                background-color: #0D0D0D;
+            }
+        }
+        .label:hover input ~ .checkmark {
+            background-color: #333333;
+        }
+        .label input:checked ~ .checkmark {
+            background-color: #B3B3B3;
+        }
+        .reduce-price {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #0D0D0D;
+            color: #CCCCCC;
+            font-size: 24px;
+        }
+    }
+}
 .voucher-modal-sm {
     padding: 20px;
     overflow-y: auto;
@@ -178,6 +224,19 @@
     background: #06111E;
     border: 1px solid #666D80;
     border-radius: 10px;
+    .failed {
+        // display: flex;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 30px;
+        background: #0D1926; 
+        border-radius: 10px;
+        color: #666D80;
+        h2 {font-size: 16px;}
+        p {
+            font-size: 12px;
+        }
+    }
 }
 .voucher-group-sm {
     position: relative;
@@ -283,6 +342,52 @@
         height: 14px;
     }
 }
+.voucher-group-sm-disable {
+    background-color: #333333;
+    img {
+        filter: grayscale(100%);
+    }
+    .quantity {
+        background-color: #0D1926;
+        color: #666D7F;
+        strong {
+            color: #B3B3B3;
+        }
+    }
+    .percent {
+        background-color: #1A1A1A;
+        color: #B3B3B3;
+    }
+    .label {
+        .checkmark {
+            border: 1px solid #333333;
+            background-color: #0D0D0D;
+        }
+    }
+    .label:hover input ~ .checkmark {
+        background-color: #0D0D0D;
+    }
+    .label input:checked ~ .checkmark {
+        background-color: #0D0D0D;
+    }
+    .reduce-price {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #0D0D0D;
+        color: #CCCCCC;
+    }
+}
+.voucher-disable-tip {
+    margin: -30px 0 30px 0;
+    padding: 10px 20px;
+    background: #0D1926;
+    border-radius: 10px;
+    color: #666D80;
+    font-size: 14px;
+    svg {
+        color: #B22424
+    }
+}
 .btn.btn-opensea {
     background: #1B3859;
     color: #fff;
@@ -313,6 +418,14 @@
         .failed {
             padding: 50px 25px;
             border-radius: 5px;
+        }
+    }
+    .voucher-disable-tip {
+        margin: -1.5rem 0 1.5rem 0;
+        font-size: 10px;
+        svg {
+            width: 12px;
+            height: 12px;
         }
     }
 }

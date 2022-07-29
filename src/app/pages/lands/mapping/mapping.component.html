@@ -1,19 +1,22 @@
-<div class="container lands-mapping-editor">
-    <div class="title">Mapping Management</div>
-    <div class="sub-title">Please click the copy button, and then update to your social app</div>
 
-    <div class="list-group">
+<div class="container lands-mapping-editor">
+    <div class="title">Mapping Instruction</div>
+    <div class="sub-title">Please click the copy button, and then update to your social app</div>
+    <div class="list-group mb-5">
         <div class="list-group-item py-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="list-title text-truncate">
                     <img src="../../../../assets/images/map.png" class="mr-2">
-                    {{ account }}
+                    {{ baseData.name }}
                 </div>
             </div>
             <div class="link">
                 <img src="../../../../assets/images/link.png" class="mr-2">
-                <span class=" text-truncate">{{baseUrl}}{{account}}.v</span>
-                <button class="btn-edit" popoverClass="popover-class" ngbPopover="Copying to clipboard" (shown)="copy(baseUrl + account + '.v')">
+                <div class="link-wrap">
+                    <span class="txt">{{baseUrl}}{{baseData.name}}.v</span>
+                    <span class="attr-title" title="{{baseUrl}}{{baseData.name}}.v">{{baseUrl}}{{baseData.name}}.v</span>
+                </div>
+                <button class="btn-edit" (click)="copy(baseUrl + account + '.v')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-front" viewBox="0 0 16 16">
                         <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2H5z"/>
                     </svg>
@@ -28,13 +31,16 @@
                     </div>
                     <div class="custom-control custom-switch custom-switch-md">
                         <input type="checkbox" class="custom-control-input" id="mapSwitch{{i}}" [checked]="item.mapping" (change)="mappingChange($event,item)"> 
-                        <label class="custom-control-label" for="mapSwitch{{i}}">Mapping</label>
+                        <label class="custom-control-label" for="mapSwitch{{i}}"></label>
                     </div>
                 </div>
-                <div class="link text-truncate">
+                <div class="link">
                     <img src="../../../../assets/images/link.png" class="mr-2">
-                    <span class=" text-truncate">{{baseUrl}}{{item.name}}.o</span>
-                    <button class="btn-edit" popoverClass="popover-class" ngbPopover="Copying to clipboard" (shown)="copy(baseUrl + item.name + '.o')">
+                    <div class="link-wrap">
+                        <span class="txt">{{baseUrl}}{{item.name}}.o</span>
+                        <span class="attr-title" title="{{baseUrl}}{{item.name}}.o">{{baseUrl}}{{item.name}}.o</span>
+                    </div>
+                    <button class="btn-edit" (click)="copy(baseUrl + item.name + '.o')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-front" viewBox="0 0 16 16">
                             <path d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2V2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2H5z"/>
                         </svg>
@@ -44,4 +50,6 @@
 
         </div>
     </div>
+
+    
 </div>

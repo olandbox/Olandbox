@@ -1,9 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {Clipboard} from '@angular/cdk/clipboard';
 import { ContractService } from 'src/app/service/contract.service';
 import { HttpService } from 'src/app/service/http.service';
 import { environment } from 'src/environments/environment';
 import { BaseData } from '../baseData';
 import { Cypher } from '../cypher';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/service/alert.service';
 
 @Component({
   selector: 'app-mapping',
@@ -13,14 +16,18 @@ import { Cypher } from '../cypher';
 export class MappingComponent implements OnInit, OnChanges {
 
   @Input() baseData: BaseData;
-  baseUrl = environment.baseUrl;
+  @Input() suffix;
+  baseUrl = window.location.origin + '/';
   account: string = '';
   lands: any[] = [];
   loading: boolean = true;
 
   constructor(
+    private router: Router,
     private contractService: ContractService,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private clipboard: Clipboard,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -35,12 +42,8 @@ export class MappingComponent implements OnInit, OnChanges {
   }
 
   async getLands() {
-    const params: Cypher = {
-      relationType: 'Mint',
-      id: this.baseData.id
-    }
-    const matchQuery = this.httpService.getChildNodesById(params)
-    this.httpService.toDatabase(matchQuery).subscribe(res => {
+    const matchQuery = this.httpService.getOwnLand(this.baseData.name)
+    this.httpService.getDatabase(matchQuery).subscribe(res => {
       res.forEach(item => {
         this.lands.push({
           id: item[0].id,
@@ -48,19 +51,45 @@ export class MappingComponent implements OnInit, OnChanges {
           mapping: item[0].properties.mapping ? true: false
         })
       });
+      setTimeout(() => {
+        this.httpService.emitData(true);
+      });
     })
   }
 
   mappingChange(e, item) {
     const status = e.currentTarget.checked ? 1 : 0;
-    const matchQuery = this.httpService.updateNodePropertyById(item.id, 'mapping', status);
-    this.httpService.toDatabase(matchQuery).subscribe(res => {
-      console.log(res)
+    const matchQuery = this.httpService.updateOwnerLandMapping(item.id, status);
+    this.httpService.updateDatabase(matchQuery).subscribe(res => {
+      if (res.length > 0) {
+        let message = status ? `Domain mapping is open, you can access your personal profile though "${item.name}.o"` : `Domain mapping is closed.`
+        this.alertService.create({
+          body: message,
+          color: 'success',
+          time: 2000
+        })
+      } else {
+        this.alertService.create({
+          body: 'Domain mapping failed.',
+          color: 'danger',
+          time: 2000
+        })
+      }
+      
     })
   }
 
   copy(name: string) {
-    navigator.clipboard.writeText(name);
+    this.clipboard.copy(encodeURI(name));
+    this.alertService.create({
+      body: `Copy successfully, go and share your profile link`,
+      color: 'success',
+      time: 2000
+    })
+
   }
 
+  cancelEdit() {
+    this.router.navigate(['detail', this.baseData.name + '.' + this.suffix]);
+  }
 }

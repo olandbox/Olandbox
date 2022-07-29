@@ -17,7 +17,7 @@
             
         }
     },
-    "/oland": {
+    "/oland/": {
         "target": "https://mint.oland.info",
         "secure": false,
         "logLevel": "debug",
@@ -27,7 +27,7 @@
         }
     },
     "/home": {
-        "target": "https://micro.home.ptteng.com/",
+        "target": "https://test.mint.oland.info",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true,
@@ -36,13 +36,13 @@
         }
     },
     "/a/": {
-        "target": "http://test.oland.info",
+        "target": "https://test.oland.info",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true,
         "pathRewrite": {}
     },
-    "/files": {
+    "/file": {
         "target": "http://test.mint.oland.info",
         "secure": false,
         "logLevel": "debug",

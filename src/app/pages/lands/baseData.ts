@@ -4,6 +4,7 @@ export class BaseData {
     intro?: string;
     logo?: string;
     name?: string;
+    alias?: string;
     type?: string;
     logoStatus?: number;
     introStatus?: number;

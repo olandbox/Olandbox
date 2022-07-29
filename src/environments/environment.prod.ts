@@ -14,5 +14,6 @@ export const environment = {
   microWebsite: 'https://www.oland.info/',
 
   slip: 1.1,
-  baseUrl: 'https://mint.oland.info/detail/',
+  
+  polygonGasApi: 'https://gasstation-mainnet.matic.network/v2'
 };
