@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { url } from 'inspector';
 import { filter } from 'rxjs/operators';
+import { HttpService } from './service/http.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,12 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   isShare: boolean = false;
 
-  constructor(private titleService: Title, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private titleService: Title, 
+    private router: Router, 
+    private activedRoute: ActivatedRoute,
+    private httpService: HttpService
+    ) {
     router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       console.log(event.url)
       let url = decodeURI(event.url).replace(/\s{2,}/g, ' ').toLocaleLowerCase();
@@ -40,6 +46,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.httpService.configFromDatabase.subscribe()
   }
+
+
 }

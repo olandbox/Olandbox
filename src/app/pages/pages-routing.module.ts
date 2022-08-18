@@ -7,6 +7,9 @@ import { UserComponent } from './user/user.component';
 import { DetailComponent } from './detail/detail.component';
 import { HistoryComponent } from './history/history.component';
 import { LandsComponent } from './lands/lands.component';
+import { LandsEditComponent } from './lands/lands-edit.component';
+import { LandsSimpleComponent } from './lands/lands-simple.component';
+import { ErrorComponent } from './error/error.component';
 
 
 const routes: Routes = [
@@ -15,10 +18,11 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'land', component: UserComponent },
   { path: 'past', component: HistoryComponent },
+  { path: '404', component: ErrorComponent},
   { path: 'detail/:name', component: LandsComponent},
-  { path: 'detail/:name/edit', component: LandsComponent, data: {edit: true}},
-  { path: ':name', component: LandsComponent},
-  { path: ':name/edit', component: LandsComponent, data: {edit: true}},
+  { path: 'detail/:name/edit', component: LandsEditComponent},
+  { path: ':name', component: LandsSimpleComponent},
+ 
 
 
   { path: 'merkletree', component: MerkletreeComponent },

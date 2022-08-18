@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,22 +8,50 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
   <div class="modal-header">
     <p class="modal-title fw-bold fs-1">{{ title }}</p>
   </div>
-  <div class="modal-body fs-5 text-break">
-    {{ message }}
+  <div class="modal-body fs-5 text-break" [innerHtml]="message">
+
   </div>
   <div class="modal-footer ">
-    <button type="button" class="btn btn-lg btn-primary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-lg btn-outline-secondary mr-3" (click)="close()">continue minting</button>
+    <button type="button" class="btn btn-lg btn-primary" (click)="goLands()">check your land {{second}}</button>
   </div>
   `
 })
 export class SucessModalComponent {
 
-  @Input() title = 'MINT SUCCESS';
-  @Input() message = "Congratulations! U have successfully obtained the land. And once you mint it, you can own it forever.  Not only can u trade the land in Opensea, but also has the editing rights of it. What's more, you can have opportunities to receive oland incentive shares in the future.";
+  @Input() title = 'MINTED';
+  @Input() message = `
+    <p>Congratulations! </p>
+    <p>Your have minted your oland successfully.</p>
+    <p>And you can own it permanently.</p>
+  `;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  timer: any;
+  second: number = 5;
+  constructor(public activeModal: NgbActiveModal, private router: Router) { }
 
   ngOnInit(): void {
+    this.timer = setInterval(() => {
+      if (this.second > 0) {
+        --this.second;
+      } else {
+        this.goLands();
+      }
+    }, 1000)
+  }
+  ngOnDestory(): void {
+    clearInterval(this.timer)
+  }
+
+  close() {
+    clearInterval(this.timer)
+    this.activeModal.close('Close click');
+  }
+
+  goLands() {
+    clearInterval(this.timer);
+    this.activeModal.close('Close click');
+    this.router.navigate(['land']);
   }
 
 }

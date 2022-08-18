@@ -16,6 +16,7 @@ input, textarea {caret-color: #fff;}
     }
 }
 
+
 .font-importent {
     color: #10BAE5;
     
@@ -79,6 +80,7 @@ hr {
 .modal-mask {
     background: #000;
 }
+
 .dark .modal-content {
     background: #080F17;
     border: 1px solid #666D80;
@@ -140,6 +142,12 @@ hr {
 }
 
 /* custom switch for md */
+.invalid {
+    .custom-control-input:checked~.custom-control-label::before {
+        border-color: #7e848a;
+        background-color: #7e848a;
+    }
+}
 
 .custom-switch.custom-switch-md .custom-control-label {
     top: -5px;
@@ -163,7 +171,7 @@ hr {
 .custom-switch.custom-switch-md .custom-control-label::after {
     position: absolute;
     left: auto;
-    right: calc(1.5rem - 3px);
+    right: calc(1.5rem - 2px);
     width: calc(1.5rem - 4px);
     height: calc(1.5rem - 4px);
     border-radius: calc(2rem - (1.5rem / 2));

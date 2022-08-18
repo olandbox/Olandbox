@@ -1,6 +1,10 @@
-import { ChangeDetectorRef, Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, HostListener, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http.service';
+import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
+import { ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-lands-footer',
@@ -19,6 +23,8 @@ export class LandsFooterComponent implements OnInit, OnChanges, OnDestroy {
   onResize() {
     this.calScroll()
   }
+  name: string;
+  suffix: string;
   isAdding: boolean = false;
   isCoverFooter: boolean = true;
   serviceCommunityListen: any;
@@ -27,13 +33,24 @@ export class LandsFooterComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private router: Router,
+    private activeRoute: ActivatedRoute,
     private httpService: HttpService,
-    ) { }
+    private _bottomSheet: MatBottomSheet,
+    private _matDialog: MatDialog
+    ) { 
+      this.activeRoute.params.subscribe(param => {
+        let nameArray = decodeURI(param.name).split('.');
+        this.name = nameArray[0].trim().replace(/\s{2,}/g, ' ').toLowerCase();
+        this.suffix = nameArray[1];
+      })
+    }
 
   ngOnInit(): void {
-    this.serviceCommunityListen = this.httpService.communityListen.subscribe(value => {
-      if (value === 0) {
+    this.serviceCommunityListen = this.httpService.communityListen.subscribe((data: any) => {
+      if (data.value === 0) {
        this.isAdding = false;
+      } else {
+        this.isAdding = true;
       }
     });
     this.servicDataListen = this.httpService.dataListen.subscribe(isEnd => {
@@ -50,22 +67,36 @@ export class LandsFooterComponent implements OnInit, OnChanges, OnDestroy {
     this.isCoverFooter = true;
   }
 
-  
 
+
+  share() {
+    const addRef = this._matDialog.open(ShareDialog, {
+      panelClass: 'recommend-dialog',
+      width: 'calc(100vw - 30px)',
+      maxWidth: '1110px'
+    })
+  }
 
   cancelEdit() {
-    const url = decodeURI(this.router.url);
-    let urlArray = url.split('/');
-    urlArray.pop();
-
-    urlArray[urlArray.length - 1] = urlArray[urlArray.length - 1].replace('.verify', '.v')
-    this.router.navigate(urlArray)
+    let name = this.suffix === 'verify' ? `${this.name}.v` : `${this.name}.o`
+    this.router.navigate([name])
   }
 
-  addLink() {
-    this.isAdding = true;
-    this.httpService.emitCommunity(1);
+  openAdd() {
+    const addRef = this._matDialog.open(AddDialog, {
+      panelClass: 'lands-add-dialog',
+      width: 'calc(100vw - 30px)',
+      maxWidth: '1110px'
+    })
+    addRef.afterClosed().subscribe(result => {
+      this._matDialog.closeAll();
+      console.log(`AddDialog result: ${result}`);
+      if (result !== undefined) {
+        this.httpService.emitCommunity(1, result);
+      }
+    })
   }
+
 
   calScroll() {
     // 文档距顶
@@ -103,3 +134,44 @@ export class LandsFooterComponent implements OnInit, OnChanges, OnDestroy {
     
 
 }
+
+
+@Component({
+  selector: 'add-dialog',
+  templateUrl: 'add-dialog.html',
+})
+export class AddDialog {
+  constructor(
+    public dialogRef: MatDialogRef<AddDialog>,
+  ) {}
+  close() {
+    this.dialogRef.close()
+  }
+}
+
+@Component({
+  selector: 'share-dialog',
+  templateUrl: 'share-dialog.html',
+})
+export class ShareDialog {
+  shareLink: string;
+  constructor(
+    public dialogRef: MatDialogRef<ShareDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private httpService: HttpService,
+  ) {
+    if (data?.url) {
+      this.shareLink = data.url
+    } else {
+      this.httpService.configFromDatabase.subscribe(res => {
+        let href = new URL(window.location.href);
+        this.shareLink = res.properties.host + href.pathname.replace('/detail', '').replace('erify/edit', '')
+      })
+    }
+  }
+  close() {
+    this.dialogRef.close()
+  }
+}
+
+

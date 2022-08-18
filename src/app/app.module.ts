@@ -1,30 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-// import zh from '@angular/common/locales/zh';
-// import { registerLocaleData } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppBootstrapModule } from "./app-bootstrap.module";
 import { PagesModule } from "./pages/pages.module";
+import { MaterialModule } from './material-module';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { AppPipesModule } from "./pipes/app-pipes.module";
-import { AlertModule } from '../app/pages/components/alert/alert.module';
-import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-
 import { DirectivesModule } from './directives/directives.module';
+import { AlertModule } from '../app/pages/components/alert/alert.module';
 
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareButtonsPopupModule } from 'ngx-sharebuttons/popup';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons'
 
-
-
-// registerLocaleData(zh);
 
 @NgModule({
   declarations: [
@@ -36,15 +31,16 @@ import { DirectivesModule } from './directives/directives.module';
     BrowserAnimationsModule,
     AppBootstrapModule,
     PagesModule,
+    MaterialModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,
     NgxSkeletonLoaderModule,
+    ShareButtonsModule,
+    ShareButtonsPopupModule,
+    ShareIconsModule,
     AppPipesModule,
     AlertModule,
     DirectivesModule,
-    ClipboardModule,
-    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

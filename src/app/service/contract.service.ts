@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject } from "rxjs";
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject, ReplaySubject, Subject } from "rxjs";
 import Web3 from 'web3';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
@@ -14,6 +14,7 @@ import { SucessModalComponent} from '../pages/components/sucess-modal/sucess-mod
 import { FailModalComponent } from '../pages/components/fail-modal/fail-modal.component';
 import { threadId } from 'worker_threads';
 import { HttpService } from './http.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -36,7 +37,7 @@ export class ContractService  {
     readonly mainContract$ = this._mainContract$.asObservable();
 
     accounts: any;
-    private _account$ = new BehaviorSubject<string>(null);
+    private _account$ = new ReplaySubject<string>();
     readonly account$ = this._account$.asObservable();
 
     chainStatus: boolean;
@@ -106,6 +107,20 @@ export class ContractService  {
         }
     }
 
+    async account() {
+        this.provider = await this.web3Modal.connect();
+        this.web3js = new Web3(this.provider);
+        let accounts = await this.web3js.eth.getAccounts();
+        if (accounts.length) {
+            return accounts[0].toLowerCase()
+        } else {
+            return ''
+        }
+    }
+
+    async getAccount() {
+        return await this.web3.eth.getAccounts();
+    }
     async initAccount() {
         this.accounts = await this.web3js.eth.getAccounts();
         this._account$.next(this.accounts[0].toLowerCase() || '');
@@ -274,6 +289,7 @@ export class ContractService  {
     }
 
     async mint(name: string, price: string) {
+
         let options = {
             from: this.accounts[0],
             gas: 960000,
@@ -282,9 +298,14 @@ export class ContractService  {
         }
         return this.mainContract.methods.register(name).send(options)
             .on('receipt', (receipt) => {
+                let ngbModalOptions: NgbModalOptions = {
+                    backdrop: 'static',
+                    keyboard: false,
+                    backdropClass: 'modal-mask', windowClass: 'dark', size: 'md', centered: true
+                };
                 this.modalService.open(
                     SucessModalComponent, 
-                    {backdropClass: 'modal-mask', windowClass: 'dark', size: 'lg', centered: true}
+                    ngbModalOptions
                 );
             })
             .on('error', (error, receipt) => {
@@ -308,9 +329,14 @@ export class ContractService  {
         }
         return this.mainContract.methods.registerByVoucher(name, cardId).send(options)
             .on('receipt', (receipt) => {
+                let ngbModalOptions: NgbModalOptions = {
+                    backdrop: 'static',
+                    keyboard: false,
+                    backdropClass: 'modal-mask', windowClass: 'dark', size: 'md', centered: true
+                };
                 this.modalService.open(
                     SucessModalComponent, 
-                    {backdropClass: 'modal-mask', windowClass: 'dark', size: 'lg', centered: true}
+                    ngbModalOptions
                 );
             })
             .on('error', (error, receipt) => {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContractService } from 'src/app/service/contract.service';
-import { LandInfo } from "../home.model";
+import { SearchInfo } from "../home.model";
 
 @Component({
   selector: 'app-minted',
@@ -9,7 +9,8 @@ import { LandInfo } from "../home.model";
   styleUrls: ['./minted.component.less']
 })
 export class MintedComponent implements OnInit {
-  @Input() landInfo: LandInfo;
+  @Input() searchInfo: SearchInfo;
+  @Input() searchName: string;
 
   constructor(private router: Router,
     private contractService: ContractService
@@ -23,7 +24,7 @@ export class MintedComponent implements OnInit {
   }
 
   async goOpensea() {
-    let uri = await this.contractService.getOpenseaUriByName(this.landInfo.standardName);
+    let uri = await this.contractService.getOpenseaUriByName(this.searchInfo.standardName);
     global.window.open(uri);
   }
 }

@@ -1,0 +1,33 @@
+<div class="land-share">
+    <app-loading *ngIf="objectStatus < 0" [isLoading]="objectStatus < 0"></app-loading>
+    <ng-container *ngIf="objectStatus > 0">
+        <button class="btn btn-language" (click)="changeLanguage()">{{language | uppercase}}</button>
+        <app-thumb-simple [suffix]="suffix" [baseData]="baseData" [language]="language"></app-thumb-simple>
+        <app-intro [suffix]="suffix" [baseData]="baseData" [language]="language"></app-intro>
+        <app-community [suffix]="suffix" [baseData]="baseData" [language]="language"></app-community>
+    </ng-container>
+    <ng-container *ngIf="suffix === 'v' && objectStatus == 0">
+        <div class="container d-flex justify-content-center align-items-center text-white py-5">
+            No one has claimed to be the owner of the official space. 
+        </div>
+    </ng-container>
+    <ng-container *ngIf="suffix === 'o' && objectStatus == 0">
+        <div class="container d-flex justify-content-center align-items-center text-white py-5">
+            No space! The page will be re-directed to detail in {{seconds}} seconds.
+        </div>
+    </ng-container>
+
+    <div class="fixed-bottom" *ngIf="(suffix === 'o' && objectStatus > 0) ||( suffix === 'v' && objectStatus >= 0)">
+        <div class="land-share-foot">
+            <button class="btn btn-col" (click)="share()">
+                <mat-icon>share</mat-icon>
+                Share
+            </button>
+            <button type="button" class="btn btn-primary" (click)="goDetail()">
+                <img src="../../../assets/images/view.png" alt="View Details">
+                View Details
+            </button>
+        </div>
+    </div>
+
+</div>

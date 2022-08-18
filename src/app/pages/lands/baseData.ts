@@ -8,5 +8,7 @@ export class BaseData {
     type?: string;
     logoStatus?: number;
     introStatus?: number;
+    languages?: any;
+    labels?: string[];
   }
   

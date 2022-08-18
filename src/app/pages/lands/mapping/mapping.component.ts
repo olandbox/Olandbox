@@ -7,6 +7,7 @@ import { BaseData } from '../baseData';
 import { Cypher } from '../cypher';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/service/alert.service';
+import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-mapping',
@@ -17,7 +18,7 @@ export class MappingComponent implements OnInit, OnChanges {
 
   @Input() baseData: BaseData;
   @Input() suffix;
-  baseUrl = window.location.origin + '/';
+  baseUrl = '';
   account: string = '';
   lands: any[] = [];
   loading: boolean = true;
@@ -28,7 +29,11 @@ export class MappingComponent implements OnInit, OnChanges {
     private httpService: HttpService,
     private clipboard: Clipboard,
     private alertService: AlertService
-  ) { }
+  ) {
+    this.httpService.configFromDatabase.subscribe(res => {
+      this.baseUrl = res.properties.host + '/';
+    })
+   }
 
   ngOnInit(): void {
     this.contractService.account$.subscribe(account => {
@@ -42,6 +47,7 @@ export class MappingComponent implements OnInit, OnChanges {
   }
 
   async getLands() {
+    this.loading = true;
     const matchQuery = this.httpService.getOwnLand(this.baseData.name)
     this.httpService.getDatabase(matchQuery).subscribe(res => {
       res.forEach(item => {
@@ -54,7 +60,19 @@ export class MappingComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.httpService.emitData(true);
       });
-    })
+      this.loading = false;
+    }, err => {this.loading = false})
+  }
+
+  getAccount(name) {
+    if (name.length > 12) {
+      return name.slice(0,6) + '...' + name.slice(name.length - 4)
+    } else {
+      return name
+    }
+  }
+  randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
   mappingChange(e, item) {
@@ -80,11 +98,14 @@ export class MappingComponent implements OnInit, OnChanges {
   }
 
   copy(name: string) {
-    this.clipboard.copy(encodeURI(name));
-    this.alertService.create({
-      body: `Copy successfully, go and share your profile link`,
-      color: 'success',
-      time: 2000
+    this.httpService.configFromDatabase.subscribe(res => {
+      const link = res.properties.host + '/' + encodeURI(name)
+      this.clipboard.copy(link);
+      this.alertService.create({
+        body: `Copy successfully, go and share your profile link`,
+        color: 'success',
+        time: 2000
+      })
     })
 
   }

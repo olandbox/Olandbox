@@ -1,53 +1,93 @@
 <div class="container lands-thumb">
+
+    
+
+
+
+
     <div class="cover" [ngClass]="{'edit': edit, 'public': suffix === 'p', owner: suffix === 'owner'}">
-        <div class="avator" [ngClass]="{'avator-edit': edit}" *ngIf="edit || baseData?.logoStatus">
+        <ng-container *ngIf="suffix === 'p' || suffix === 'owner'">
+            <div class="avator">
+                <div class="people">
+                    <img src="../../../../assets/images/land.png" alt="">
+                  </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="suffix === 'verify'">
+            <ng-container *ngIf="(langBaseData | json) == ({} | json)">
+                <div class="avator">
+                    <div class="people">
+                        <img src="../../../../assets/images/land.png" alt="">
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="(langBaseData | json) != ({} | json)">
+                <div class="avator" [ngClass]="{'avator-edit': edit}" *ngIf="edit || langBaseData?.logoStatus">
+                    <img *ngIf="langBaseData?.logo" [src]="langBaseData.logo" alt="">
+                    <div *ngIf="!langBaseData?.logo" class="people">
+                        <img src="../../../../assets/images/land.png" alt="">
+                    </div>
+                    <div *ngIf="isVip && !edit" class="vip"></div>
+                    <div class="upload" *ngIf="edit" (click)="upload()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                        </svg>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <ng-container *ngIf="suffix === 'p' || suffix === 'owner'">
+        <div class="content">
+            <div class="">
+                <div class="title text-break">{{ urlName }}</div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="suffix === 'verify'">
+        <ng-container *ngIf="(langBaseData | json) == ({} | json)">
+            <div class="content">
+                <div class="">
+                    <div class="title text-break">{{ urlName }}</div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(langBaseData | json) != ({} | json)">
             
-            <img *ngIf="baseData?.logo" [src]="baseData.logo" alt="">
-            <div *ngIf="!baseData?.logo" class="people">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                </svg>
-              </div>
-            <div class="upload" *ngIf="edit" (click)="upload()">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
-                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="content" [ngClass]="{'content-edit': edit}" *ngIf="edit || baseData?.logoStatus">
-        <div class="mb-1">
-            <div class="title text-break" *ngIf="suffix !== 'o' && suffix !== 'v'">{{ baseData.name }}</div>
-            <div class="title text-break" *ngIf="suffix === 'o' || suffix === 'v'" style="width: 100%">{{ baseData.alias || baseData.name }}</div>
-        </div>
-
-        <div class="alias" *ngIf="!edit && suffix !== 'o'&& suffix !== 'v'">
-            <span *ngIf="!aliasEditing" class="d-inline-block text-break ">{{ baseData.alias }}</span>
-        </div>
-
-        <div class="alias text-truncate" *ngIf="edit">
-            <input *ngIf="aliasEditing" type="text" class="form-control form-control-edit" maxlength="30" [(ngModel)]="baseData.alias" (blur)="blurAlias()" autoFocus>
-
-            <span *ngIf="!aliasEditing" class="d-inline-block text-truncate " (click)="editAlias()" >{{ baseData.alias || 'name' }}</span>
+            <div class="content" [ngClass]="{'content-edit': edit}" *ngIf="edit || langBaseData?.logoStatus">
+                <div class="">
+                    <div class="title text-break">{{ langBaseData.name }}</div>
+                </div>
         
-            <button *ngIf="!aliasEditing" class="btn-edit" (click)="editAlias()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                </svg>
-            </button>
-        </div>
-
-        <div class="text-right mt-3" *ngIf="edit">
-            <div class="custom-control custom-switch custom-switch-md">
-                <input type="checkbox" class="custom-control-input" id="thumbSwitch" [checked]="baseData?.logoStatus" (change)="changeLogoStatus($event)">
-                <label class="custom-control-label" for="thumbSwitch"></label>
+                <div class="alias" *ngIf="!edit">
+                    <span *ngIf="!aliasEditing" class="d-inline-block text-break ">{{ langBaseData.alias }}</span>
+                </div>
+        
+                <div class="alias" *ngIf="edit">
+                    <input *ngIf="aliasEditing" type="text" class="form-control form-control-edit" maxlength="30" [(ngModel)]=" langBaseData.alias" (blur)="blurAlias()" (keyup.enter)="blurAlias()" autoFocus>
+        
+                    <span *ngIf="!aliasEditing" class="d-inline-block " (click)="editAlias()" >{{ langBaseData.alias || 'name' }}</span>
+                
+                    <button *ngIf="!aliasEditing" class="btn-edit" (click)="editAlias()">
+                        <fa-icon [icon]="['fas', 'pen']"></fa-icon>
+                    </button>
+                </div>
+        
+                <div class="text-right mt-3 mr-0 mr-md-4 pr-0 pr-md-3" *ngIf="edit">
+                    <div class="custom-control custom-switch custom-switch-md">
+                        <input type="checkbox" class="custom-control-input" id="thumbSwitch" [checked]="langBaseData?.logoStatus" (change)="changeLogoStatus($event)">
+                        <label class="custom-control-label" for="thumbSwitch"></label>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </ng-container>
 
+    </ng-container>
+
+
+    <div *ngIf="suffix === 'o' || suffix === 'v'" style="padding-top: 40px;"></div>
 </div>
 

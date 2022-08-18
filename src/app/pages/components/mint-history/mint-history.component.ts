@@ -37,7 +37,7 @@ export class MintHistoryComponent implements OnInit, OnDestroy {
     this.httpService.getMintHistory().then(res => {
       this.historyList = res.reverse();
 
-      this.polling();
+      // this.polling();
     })
   }
 

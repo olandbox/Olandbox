@@ -15,13 +15,13 @@ export class TopBarComponent implements OnInit {
 
   isMenuCollapsed = true;
   menuList = [
-    { title: 'HOME', link: `${environment.microWebsite}home`, navigation: false, isShow: true },
-    { title: 'MINT', link: '/mint', navigation: true, isShow: true },
-    { title: 'MY LAND', link: '/land', navigation: true, isShow: true },
-    { title: 'BLUE SOUL', link: '/detail', navigation: true, isShow: true },
+    { title: 'Home', link: `${environment.microWebsite}home`, navigation: false, isShow: true },
+    { title: 'Mint', link: '/mint', navigation: true, isShow: true },
+    { title: 'My Land', link: '/land', navigation: true, isShow: true },
+    { title: 'Blue Soul', link: '/detail', navigation: true, isShow: true },
     { title: 'Q&A', link: `${environment.microWebsite}detail?templateId=2`, navigation: false, isShow: true },
-    { title: 'ABOUT', link: `${environment.microWebsite}detail?templateId=3`, navigation: false, isShow: true },
-    { title: '3D OLAND', link: `http://test.unity.oland.info`, navigation: false, isShow: !environment.production},
+    { title: 'About', link: `${environment.microWebsite}detail?templateId=3`, navigation: false, isShow: true },
+    { title: '3D Oland', link: `http://test.unity.oland.info`, navigation: false, isShow: !environment.production},
 
   ]
   currentLink: string = '';
@@ -102,8 +102,6 @@ export class TopBarComponent implements OnInit {
       } else {
         this.router.navigateByUrl(link.link);
       }
-      (document.querySelector('.bg') as HTMLElement).style.maxHeight = '';
-      (document.querySelector('.bg') as HTMLElement).style.overflow = '';
     } else {
       global.window.location.href = link.link;
     }

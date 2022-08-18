@@ -18,3 +18,40 @@ export class LandInfo {
     selectedCardPercent: number = null; // 已选voucher的优惠百分比 
     constructor() {}
 }
+
+export interface SearchInfo {
+    standardName?: string;
+    logicLength?: number;
+
+    owner?: string;
+    img?: string;
+
+    selectedCardId?: string;
+
+    originPrice?: string;
+
+}
+export enum CardStatus {
+    notSelected,
+    invalidSelected,
+    validSelected
+}
+export interface Card {
+    cardId: number;
+    length: number;
+    name: string;
+    priceOff: number;
+    balance: number;
+    disabled: boolean;
+    selected: boolean;
+}
+export interface Cards {
+    cards: Card[];
+}
+export enum SearchBoard {
+    notSearch,
+    notOpen,
+    minted,
+    notMint
+}
+

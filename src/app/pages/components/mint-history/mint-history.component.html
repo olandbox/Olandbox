@@ -6,14 +6,14 @@
                 <span class="primary px-2">{{ history.registrant.slice(0, 2) }}...{{ history.registrant.slice(38) }}</span>
                 <span class="second">get</span>
                 <span class="second d-none d-md-inline"> "</span>
-                <a class="d-none d-md-inline text-truncate px-1" routerLink="/detail/{{ history.originalName }}">{{ history.originalName }}</a>
+                <a class="d-none d-md-inline text-truncate px-1" routerLink="/detail/{{ history.originalName }}.owner">{{ history.originalName }}</a>
                 <span class="d-none d-md-inline second"> "</span>
             </div>
             <span class="primary time" style="flex: 0 0 auto">{{history.time | timeSince}}</span>
         </div>    
         <p class="d-md-none">
             <span class="second"> "</span>
-            <a class="d-inline-block text-truncate" routerLink="/detail/{{ history.originalName }}">{{ history.originalName }}</a>
+            <a class="d-inline-block text-truncate" routerLink="/detail/{{ history.originalName }}.owner">{{ history.originalName }}</a>
             <span class="second">" </span>
         </p>
     </li>

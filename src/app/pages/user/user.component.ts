@@ -15,10 +15,10 @@ export class UserComponent implements OnInit {
 
   account: string = '';
   tab: number = 1;
-  // lands: any[] = [];
   ownLands: any[] = [];
   verifyLands: any[] = [];
   cards: any[] = [];
+  tCanvas = null;
 
 
   isCardsLoading: boolean = false;
@@ -51,6 +51,14 @@ export class UserComponent implements OnInit {
 
   changeTab(tab: number) {
     this.tab = tab;
+  }
+
+  getAccount(name) {
+    if (name.length > 12) {
+      return name.slice(0,6) + '...' + name.slice(name.length - 4)
+    } else {
+      return name
+    }
   }
 
   randomIntFromInterval(min, max) { // min and max included 
@@ -111,33 +119,15 @@ export class UserComponent implements OnInit {
     })
   }
 
-  // async getLands() {
-  //   this.isLandsLoading = true;
-  //   const balanceCount = await this.contractService.getUserBalance(this.account);
 
-  //   for(let i = 0; i < balanceCount; i++) {
-  //     const token = await this.contractService.getTokenByIndex(i);
-  //     const uriStr = await this.contractService.getTokenUri(token);
-  //     const uri = new URL(uriStr);
-  //     this.httpService.getMetadata(uri.pathname).then(metadata => {
-  //       if (i === balanceCount - 1) {
-  //         this.isLandsLoading = false;
-  //       }
-  //       const randomNum = this.randomIntFromInterval(1,3);
-  //       metadata.num = randomNum;
-  //       this.lands.push(metadata)
-  //     }, err => {
-  //       console.log(err)
-  //     })
-  //   }
-    
-  // }
-
-  logout() {
-    this.cards = [];
-    this.ownLands = [];
-    this.verifyLands = [];
+  getTextWidth(text, font = '900 12px sans-serif') {
+    // re-use canvas object for better performance
+    const canvas = this.tCanvas || (this.tCanvas = document.createElement('canvas'));
+    const context = canvas.getContext('2d');
+    context.font = font;
+    return context.measureText(text).width;
   }
+
 
   async goVoucherOpensea(card) {
     let uri = `${environment.oprensearURI}${environment.voucherAddress}/`;
@@ -152,6 +142,10 @@ export class UserComponent implements OnInit {
 
   async goDetail(name: string, belong: string) {
     this.router.navigate(['/detail', name + '.' + belong])
+  }
+
+  async goEdit(name: string, belong: string) {
+    this.router.navigate(['/detail', name + '.' + belong, 'edit'])
   }
 
   goDc() {

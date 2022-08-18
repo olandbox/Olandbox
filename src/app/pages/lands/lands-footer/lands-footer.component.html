@@ -1,3 +1,4 @@
+<!-- PC -->
 <div class="fixed-bottom land-edit-btns d-none d-md-block" [ngClass]="isCoverFooter ? 'non-transparent' : ''">
     <div class="container">
         <div class="d-flex justify-content-between">
@@ -12,59 +13,43 @@
             </div>
 
             <div class="d-flex justify-content-around">
-                <button class="btn btn-second" (click)="cancelEdit()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                      </svg>
+                <button class="btn btn-second " (click)="share()">
+                    <mat-icon>share</mat-icon>
+                    Share
+                </button>
+                <button class="btn btn-second ml-3" (click)="cancelEdit()">
+                    <mat-icon>visibility</mat-icon>
                     Profile View
                 </button>
-                <button *ngIf="tab === '2'" class="btn btn-second ml-3" disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
-                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
-                      </svg>
-                    Recommend
-                </button>
-                <button *ngIf="tab === '2'" class="btn btn-main btn-active ml-3" [disabled]="isAdding" (click)="addLink()">
-                    <svg *ngIf="!isAdding" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                    </svg>
+                <button *ngIf="tab === '2'" class="btn btn-main btn-active ml-3" [disabled]="isAdding"  (click)="openAdd()">
+                    <mat-icon *ngIf="!isAdding">add_circle</mat-icon>
                     <div *ngIf="isAdding"  class="spinner-border text-light" style="width: 1em; height: 1em" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
-                    Add New Relation
+                    Add
                 </button>
             </div>
         </div>
     </div>
 </div>
 
-
+<!-- mobile -->
 <div class="fixed-bottom land-edit-btns-sm d-md-none">
     <div class="container">
 
         <div class="d-flex justify-content-around">
+            <button class="btn btn-col" (click)="share()">
+                <mat-icon>share</mat-icon>
+                Share
+            </button>
             <button class="btn btn-col" (click)="cancelEdit()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
-                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
-                </svg>
+                <mat-icon>visibility</mat-icon>
                 Profile View
             </button>
-            <button *ngIf="tab === '2'" class="btn btn-col" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-fill" viewBox="0 0 16 16">
-                    <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
-                    </svg>
-                Recommend
-            </button>
-            <button *ngIf="tab === '2'" class="btn btn-main btn-active" [disabled]="isAdding" (click)="addLink()">
-                <svg *ngIf="!isAdding" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                </svg>
-                <div *ngIf="isAdding"  class="spinner-border text-light" style="width: 1em; height: 1em" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                Add New Relation
+            <button *ngIf="tab === '2'" class="btn btn-main btn-active" [disabled]="isAdding" (click)="openAdd()">
+                <mat-icon *ngIf="!isAdding" class="mr-2">add_circle</mat-icon>
+                <mat-spinner *ngIf="isAdding" class="mr-2" [diameter]="24"></mat-spinner>
+                Add
             </button>
         </div>
 

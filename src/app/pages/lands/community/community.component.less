@@ -1,11 +1,112 @@
 
-
 .lands-community {
+    .land-list::-webkit-scrollbar {display: none;}
+    .land-list {
+        display: flex;
+        overflow-y: hidden;
+        margin-bottom: 20px;
+        .content {
+            display: flex;
+            line-height: 1.5; 
+            flex: 1 0 100%; 
+            font-size: 1rem; position: relative;
+            background: #0F1926;
+            border: 1px solid #192F4C;
+            border-radius: 5px;
+            padding: 20px;
+            color: #fff;
+            text-decoration: none;
+            align-items: center;
+            min-height: 50px;
+            padding: 0 20px;
+            right: 0;
+            transition: right 200ms linear;
+
+            .img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                background-color: #112233;
+                overflow: hidden;
+                
+                img {
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .card-body {
+                padding: 0;
+                .card-title {
+                    font-size: 14px;
+                    color: #FFFFFF;
+                }
+                .card-text {
+                    font-size: 12px;
+                    color: #666D80;
+                }
+            }
+        }
+        .space { flex: 0 0 62px; }
+        .space-2 {
+            flex: 0 0 122px;
+        }
+        .btn {
+            border: 0; 
+            padding: 0; 
+            font-size: 20px;
+            line-height: 50px;
+            background-color: #26364D;
+            color: #9299AC; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 5px;
+            position: absolute; 
+            right: 16px; 
+            outline: 0; 
+        }
+        .btn-2 {
+            right: 76px;
+        }
+    }
+    .land-list.swiped {
+        .content {
+            right: 62px;
+            
+        }
+        .content-2 {
+            right: 122px;
+            
+        }
+    }
+    @media (hover: hover) {
+        .land-list:hover {
+            .content {
+                right: 62px;
+                
+            }
+            .content-2 {
+                right: 122px;
+                
+            }
+        }
+    }
+    .scroll-snap {
+        scroll-snap-type: x;
+        -webkit-overflow-scrolling: touch;
+        .space {scroll-snap-align: end;}
+        .content {scroll-snap-align: start;}
+    }
+
     .block {
         padding: 20px;
         background: #0F1926;
         border: 1px solid #192F4C;
         border-radius: 5px;
+        margin-bottom: 20px;
+        
         .title {
             padding: 0 20px;
             margin-bottom: 40px;
@@ -23,11 +124,14 @@
             text-decoration: none;
             align-items: center;
             .img {
-                width: 40px;
-                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
                 background-color: #112233;
-                border-radius: 50%;
                 overflow: hidden;
+                
                 img {
                     object-fit: cover;
                     width: 100%;
@@ -45,10 +149,19 @@
                     color: #666D80;
                 }
             }
+            
         }
+        
     }
-    .block, .block-none {
-        border: 0 none;
+    .block.zoom {
+        -webkit-transition: -webkit-transform .2s;
+        transition: transform .2s;
+        &:hover {
+            -webkit-transform: scale(1.01);
+            -ms-transform: scale(1.01);
+            transform: scale(1.01);
+            zoom: 1.01;
+        }
     }
     .no-community {
         background: #0D1926;
@@ -85,6 +198,9 @@
     }
     .list-group {
         margin: 0 ;
+        .infos {
+            min-height: 80px;
+        }
         .editor {
             width:0; 
             flex: 1 1 100%;
@@ -92,12 +208,24 @@
             align-content: center;
         }
         .btn-edit {
+            line-height: 12px;
+            background-color: transparent;
+            border: 0;
+            color: #666D80;
+            font-size: 12px;
+        }
+        .btn-del {
+            position: relative;
+            top: 5px;
+            line-height: 14px;
+            height: 14px;
             background-color: transparent;
             border: 0;
             color: #666D80;
         }
-        
-        
+        .link-btn-group {
+
+        }
     }
     
 }
@@ -116,18 +244,9 @@
         bottom: 0;
         width: 40px; 
         cursor: move; 
-        svg {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: calc(50% - 10px);
-        }
-        svg:first-child {
-            left: 5px;
-        }
-        svg:last-child {
-            left: 13px;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
     }
     span:focus-visible {
@@ -137,8 +256,8 @@
     .image {
         position: relative;
         margin-right: 30px;
-        width: 90px;
-        height: 90px;
+        width: 80px;
+        height: 80px;
         background: #09101A;
         border: 1px solid #182D48;
         border-radius: 5px;
@@ -150,15 +269,16 @@
         }
         .upload {
             position: absolute;
-            right: 0;
-            top: 0;
-            width: 30px;
-            height: 30px;
-            background: #DCDDDE;
-            box-shadow: 0px 0px 8px 0px rgba(9, 16, 26, 0.3);
-            border-radius: 30px;
+            // right: 0;
+            // top: 0;
+            // width: 30px;
+            // height: 30px;
+            // background: #DCDDDE;
+            // box-shadow: 0px 0px 8px 0px rgba(9, 16, 26, 0.3);
+            // border-radius: 30px;
+            inset: 0 0 0 0;
             color: #4F545C;
-            line-height: 28px;
+            line-height: 100px;
             text-align: center;
             cursor: pointer;
         }
@@ -186,9 +306,10 @@
 @media (max-width: 767.98px) {
     .lands-community {
         .no-community {
-            padding: 0 20px;
+            padding: 20px;
         }
         .block {
+            padding: 10px 0;
             .title {
                 padding: 0 15px;
                 font-size: 16px;
@@ -206,7 +327,9 @@
             height: 50px;
         }
         .list-group {
-            
+            .infos {
+                min-height: 70px;
+            }
             
         }
         
@@ -217,14 +340,10 @@
             height: 70px;
             margin-right: 15px;
             .upload {
-                width: 20px;
-                height: 20px;
-                border-radius: 20px;
-                line-height: 20px;
-                svg {
-                    width: 12px;
-                    height: 12px;
-                }
+                // width: 20px;
+                // height: 20px;
+                // border-radius: 20px;
+                line-height: 80px;
             }
         }
     }

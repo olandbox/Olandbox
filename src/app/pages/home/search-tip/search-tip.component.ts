@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LandInfo } from "../home.model";
+import { SearchBoard, SearchInfo } from "../home.model";
 
 @Component({
   selector: 'app-search-tip',
@@ -8,8 +8,10 @@ import { LandInfo } from "../home.model";
 })
 export class SearchTipComponent implements OnInit {
 
-  @Input() landInfo: LandInfo;
+  @Input() searchInfo: SearchInfo;
+  @Input() searchBoard: SearchBoard;
 
+  SearchBoard = SearchBoard;
   constructor() { }
 
   ngOnInit(): void {

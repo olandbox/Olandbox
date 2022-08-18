@@ -1,25 +1,16 @@
 <div class="main">
-  <div class="account-card" *ngIf="account">
-      <div class="container d-flex align-items-center">
-        <div class="people">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-          </svg>
+  <div class="lands-edit-tabs">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <ul class="d-flex">
+                <li [ngClass]="{'active': tab === 1}" (click)="changeTab(1)">Voucher</li>
+                <li [ngClass]="{'active': tab === 2}" (click)="changeTab(2)">My Lands</li>
+                <li [ngClass]="{'active': tab === 3}" (click)="changeTab(3)">Lands Management</li>
+            </ul>
         </div>
-        <span class="text-truncate">{{account}}</span>
-      </div>
-      
-  </div>
-  <div class="account-tab">
-    <div class="container d-flex align-items-center" *ngIf="account">
-      <ul class="d-flex justify-content-end px-0 my-0">
-        <li class="btn mr-4" [ngClass]="tab === 1 ? 'btn-active' : ''" (click)="changeTab(1)">Voucher</li>
-        <li class="btn mr-4" [ngClass]="tab === 2 ? 'btn-active' : ''" (click)="changeTab(2)">Private land</li>
-        <li class="btn" [ngClass]="tab === 3 ? 'btn-active' : ''" (click)="changeTab(3)">Verify land</li>
-      </ul>
     </div>
-  </div>
+</div>
+
   
   <div class="container overflow-hidden" *ngIf="account; else tip">
     <ng-container *ngIf="tab === 1">
@@ -27,13 +18,13 @@
         <div class="col-12 col-lg-4 mb-3" *ngFor="let card of cards">
           <div class="voucher-card">
             <div class="head">
-              <div class="title">Voucher quantity: <strong>{{ card.balance }}</strong></div>
+              <div class="title">Quantity: <strong>{{ card.balance }}</strong></div>
               <div class="title-sub"></div>
             </div>
             <div class="body">
               <div class="percent">
                 <div class="info">
-                  <strong class="text-{{card.length}}">{{ card.priceOff }}%</strong>
+                  <strong class="text-{{card.length}}">{{ card.priceOff == 0 ? 'Free' : card.priceOff + '%' }}</strong>
                   <span>Discount</span>
                 </div>
                 <div class="thumb">
@@ -83,8 +74,9 @@
       <div class="row card-group" *ngIf="verifyLands.length">
         <div class="col-4 col-lg-2 mb-3" *ngFor="let land of verifyLands">
           <div class="land-card" [ngClass]="'land' + land.num" (click)="goDetail(land.name, 'verify')">
-            <strong>{{ land.name }}</strong>
+            <strong>{{ getAccount(land.name) }}</strong>
           </div>
+          <button class="btn btn-second btn-block mt-2" (click)="goEdit(land.name, 'verify')">Edit Blue Soul</button>
         </div>
       </div>
       <div class="empty-card" *ngIf="!verifyLands.length">

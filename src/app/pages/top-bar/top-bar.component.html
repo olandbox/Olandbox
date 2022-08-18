@@ -16,15 +16,15 @@
                 <button type="button" class="btn btn-outline-primary btn-sm mr-2 rounded-lg" *ngIf="!(chainStatus$ | async)" (click)="switchChain()">
                     <span>Switch Network</span>
                 </button>
-                <button type="button" class="btn btn-outline-primary btn-sm rounded-lg" *ngIf="(account$ | async) && (chainStatus$ | async)" (click)="disconnect()">
-                    <span>{{ (account$ | async).slice(0, 2) }}...{{ (account$ | async).slice(38) }}</span>
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-lg" *ngIf="account && (chainStatus$ | async)" (click)="disconnect()">
+                    <span>{{ account.slice(0, 2) }}...{{ account.slice(38) }}</span>
                 </button>
-                <button type="button" class="btn btn-outline-primary btn-sm rounded-lg" *ngIf="!(account$ | async) && (chainStatus$ | async)" (click)="connect()">
+                <button type="button" class="btn btn-outline-primary btn-sm rounded-lg" *ngIf="!account && (chainStatus$ | async)" (click)="connect()">
                     <span>Connect</span>
                 </button>
             </div>
 
-            <!-- <div class="ml-2 text-primary fs6" *ngIf="(account$ | async)">{{ (account$ | async).slice(0, 2) }}...{{ (account$ | async).slice(38) }}</div> -->
+            <!-- <div class="ml-2 text-primary fs6" *ngIf="account">{{ account.slice(0, 2) }}...{{ account.slice(38) }}</div> -->
 
             
             <!-- mobie -->
